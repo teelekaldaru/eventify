@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Eventify.Common.Classes.Products
+namespace Eventify.Common.Classes.Events
 {
-    public class Product
+    public class Event
     {
         public Guid Id { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using Eventify.DAL.Products;
+﻿using Eventify.DAL.Events;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Eventify.DAL
@@ -7,7 +7,7 @@ namespace Eventify.DAL
     {
         public static void Init(IServiceCollection services)
         {
-            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IEventRepository, EventRepository>();
         }
     }
 }

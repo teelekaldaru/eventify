@@ -1,4 +1,4 @@
-﻿using Eventify.Core.Products;
+﻿using Eventify.Core.Events;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Eventify.Core
@@ -7,7 +7,7 @@ namespace Eventify.Core
     {
         public static void Init(IServiceCollection services)
         {
-            services.AddScoped<IProductWebService, ProductWebService>();
+            services.AddScoped<IEventWebService, EventWebService>();
         }
     }
 }
