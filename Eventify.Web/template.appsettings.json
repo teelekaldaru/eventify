@@ -1,0 +1,30 @@
+{
+  "Application": {
+    "DisableCache": true,
+    "ShowDevExceptionPage": true
+  },
+
+  "Database": "PostgreSQL", // PostgreSQL or MSSQL
+
+  "ConnectionStrings": {
+    "MainConnection": "Server=localhost;Port=5432;Database=foodly-main;User Id=username;Password=password;"
+  },
+
+  "PostgreSql": {
+    "Password": "password"
+  },
+
+  "RedirectHttps": true,
+  "https_port": 5001, //Set this for https redirection (e.g. 443)
+
+  // LogLevel Severity: "Trace", "Debug", "Information", "Warning", "Error", "Critical", "None"
+  "Logging": {
+    "PathFormat": "Logs/log-{Date}.log",
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*"
+}

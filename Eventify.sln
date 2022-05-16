@@ -1,0 +1,85 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32505.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Presentation Layer", "1. Presentation Layer", "{1BF7F665-55E3-47B5-9BE1-E8F50257AE8D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Common Layer", "2. Common Layer", "{BF046187-B331-4706-9886-B8B09685EAF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Business Logic Layer", "3. Business Logic Layer", "{E8A7B61F-9BEB-4794-B953-F02F9B95F0A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Data Access Layer", "4. Data Access Layer", "{4E8976B9-8223-47E8-B641-9EC49ED2C162}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Solution Files", "0. Solution Files", "{B28AF34B-0E27-41C1-B270-FDEE84813CC7}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventify.Web", "Eventify.Web\Eventify.Web.csproj", "{CA890323-6E3B-4B46-AE9C-6A4BD5A8984B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventify.Common.Classes", "Eventify.Common.Classes\Eventify.Common.Classes.csproj", "{F8CBAFE2-98AB-4F32-AFCC-D13A3117564F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventify.Core.Base", "Eventify.Core.Base\Eventify.Core.Base.csproj", "{BC5F6683-5EE6-485B-82AB-2C6F2C7CD1D2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventify.Core", "Eventify.Core\Eventify.Core.csproj", "{93658433-3AE8-4BF1-B17D-AA574E6B8B4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventify.DAL", "Eventify.DAL\Eventify.DAL.csproj", "{4BABD222-AF12-4F1C-A7D5-8E1CE34066AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventify.DAL.Base", "Eventify.DAL.Base\Eventify.DAL.Base.csproj", "{1D7955B5-CC22-4ABC-BF55-55F633D7E61E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eventify.Domain", "Eventify.Domain\Eventify.Domain.csproj", "{A3C41CE2-78C1-4178-A565-2EFBD3CD7D30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA890323-6E3B-4B46-AE9C-6A4BD5A8984B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA890323-6E3B-4B46-AE9C-6A4BD5A8984B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA890323-6E3B-4B46-AE9C-6A4BD5A8984B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA890323-6E3B-4B46-AE9C-6A4BD5A8984B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8CBAFE2-98AB-4F32-AFCC-D13A3117564F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8CBAFE2-98AB-4F32-AFCC-D13A3117564F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8CBAFE2-98AB-4F32-AFCC-D13A3117564F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8CBAFE2-98AB-4F32-AFCC-D13A3117564F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC5F6683-5EE6-485B-82AB-2C6F2C7CD1D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC5F6683-5EE6-485B-82AB-2C6F2C7CD1D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC5F6683-5EE6-485B-82AB-2C6F2C7CD1D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC5F6683-5EE6-485B-82AB-2C6F2C7CD1D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93658433-3AE8-4BF1-B17D-AA574E6B8B4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93658433-3AE8-4BF1-B17D-AA574E6B8B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93658433-3AE8-4BF1-B17D-AA574E6B8B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93658433-3AE8-4BF1-B17D-AA574E6B8B4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BABD222-AF12-4F1C-A7D5-8E1CE34066AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BABD222-AF12-4F1C-A7D5-8E1CE34066AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BABD222-AF12-4F1C-A7D5-8E1CE34066AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BABD222-AF12-4F1C-A7D5-8E1CE34066AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D7955B5-CC22-4ABC-BF55-55F633D7E61E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D7955B5-CC22-4ABC-BF55-55F633D7E61E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D7955B5-CC22-4ABC-BF55-55F633D7E61E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D7955B5-CC22-4ABC-BF55-55F633D7E61E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3C41CE2-78C1-4178-A565-2EFBD3CD7D30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3C41CE2-78C1-4178-A565-2EFBD3CD7D30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3C41CE2-78C1-4178-A565-2EFBD3CD7D30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3C41CE2-78C1-4178-A565-2EFBD3CD7D30}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CA890323-6E3B-4B46-AE9C-6A4BD5A8984B} = {1BF7F665-55E3-47B5-9BE1-E8F50257AE8D}
+		{F8CBAFE2-98AB-4F32-AFCC-D13A3117564F} = {BF046187-B331-4706-9886-B8B09685EAF2}
+		{BC5F6683-5EE6-485B-82AB-2C6F2C7CD1D2} = {E8A7B61F-9BEB-4794-B953-F02F9B95F0A1}
+		{93658433-3AE8-4BF1-B17D-AA574E6B8B4C} = {E8A7B61F-9BEB-4794-B953-F02F9B95F0A1}
+		{4BABD222-AF12-4F1C-A7D5-8E1CE34066AD} = {4E8976B9-8223-47E8-B641-9EC49ED2C162}
+		{1D7955B5-CC22-4ABC-BF55-55F633D7E61E} = {4E8976B9-8223-47E8-B641-9EC49ED2C162}
+		{A3C41CE2-78C1-4178-A565-2EFBD3CD7D30} = {4E8976B9-8223-47E8-B641-9EC49ED2C162}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D2AA73F-0095-4E3B-BCBF-71CD57144746}
+	EndGlobalSection
+EndGlobal
