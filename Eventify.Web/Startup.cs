@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Eventify.Common.Classes.AutoMapper;
 using Eventify.DAL.Infrastructure;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
 namespace Eventify.Web
 {
@@ -22,10 +21,9 @@ namespace Eventify.Web
 
             services.AddControllersWithViews();
 
-            // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "client-app/build";
+                configuration.RootPath = "ClientApp/build";
             });
 
             services.AddAutoMapper(typeof(Startup));
@@ -67,11 +65,11 @@ namespace Eventify.Web
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "client-app";
+                spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:3000/");
                 }
             });
         }
