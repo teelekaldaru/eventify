@@ -35,7 +35,7 @@ namespace Eventify.DAL.Infrastructure
                 Password = password
             };
             services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(systemContextBuilder.ConnectionString, b => b.MigrationsAssembly("Foodly.DAL")), ServiceLifetime.Scoped, ServiceLifetime.Singleton
+                options.UseNpgsql(systemContextBuilder.ConnectionString, b => b.MigrationsAssembly("Eventify.DAL")), ServiceLifetime.Scoped, ServiceLifetime.Singleton
             );
         }
     }
