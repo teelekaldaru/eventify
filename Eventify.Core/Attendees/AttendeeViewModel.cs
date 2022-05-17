@@ -10,4 +10,12 @@ namespace Eventify.Core.Attendees
 
         public string Code { get; set; }
     }
+
+    public class AttendeeDetailsViewModel
+    {
+        public Guid Id { get; set; }
+
+        public string Name { get; set; }
+
+    }
 }

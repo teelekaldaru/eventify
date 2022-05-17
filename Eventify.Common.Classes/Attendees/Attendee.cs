@@ -21,8 +21,8 @@ namespace Eventify.Common.Classes.Attendees
 
         public Event Event { get; set; }
 
-        public Person Person { get; set; }
+        public Person? Person { get; set; }
 
-        public Company Company { get; set; }
+        public Company? Company { get; set; }
     }
 }

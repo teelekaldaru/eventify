@@ -8,8 +8,7 @@ namespace Eventify.DAL.Events
     {
         public EventProfile()
         {
-            CreateMap<DbEvent, Event>()
-                .ReverseMap();
+            CreateMap<DbEvent, Event>().ReverseMap();
         }
     }
 }

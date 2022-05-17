@@ -1,4 +1,5 @@
-﻿using Eventify.DAL.Events;
+﻿using Eventify.DAL.Attendees;
+using Eventify.DAL.Events;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Eventify.DAL
@@ -8,6 +9,7 @@ namespace Eventify.DAL
         public static void Init(IServiceCollection services)
         {
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IAttendeeRepository, AttendeeRepository>();
         }
     }
 }

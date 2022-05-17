@@ -15,7 +15,7 @@ namespace Eventify.DAL.Events
     {
         Task<IEnumerable<Event>> GetEvents();
 
-        Task<Event?> GetEventById(Guid eventId);
+        Task<Event> GetEventById(Guid eventId);
 
         Task<Event> AddEvent(Event entity);
 
@@ -36,10 +36,15 @@ namespace Eventify.DAL.Events
             return dbEvents.Select(x => x.ToEvent());
         }
 
-        public async Task<Event?> GetEventById(Guid eventId)
+        public async Task<Event> GetEventById(Guid eventId)
         {
-            var dbEvent = await GetAsync<DbEvent>(eventId);
-            return dbEvent?.ToEvent();
+            await using var context = CreateContext();
+            var dbEvent = await context.Events
+                .Include(x => x.Attendees).ThenInclude(x => x.Person)
+                .Include(x => x.Attendees).ThenInclude(x => x.Company)
+                .FirstOrDefaultAsync(x => x.Id == eventId);
+
+            return dbEvent.ToEvent();
         }
 
         public async Task<Event> AddEvent(Event entity)
