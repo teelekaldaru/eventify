@@ -1,6 +1,12 @@
 ﻿using AutoMapper;
 using Eventify.Common.Classes.AutoMapper;
 using Eventify.DAL.Infrastructure;
+using Eventify.Web.Helpers;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Eventify.Web
 {
@@ -23,7 +29,7 @@ namespace Eventify.Web
 
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/build";
+                configuration.RootPath = "client-app/build";
             });
 
             services.AddAutoMapper(typeof(Startup));
@@ -65,11 +71,9 @@ namespace Eventify.Web
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "ClientApp";
-
-                if (env.IsDevelopment())
+	            if (env.IsDevelopment())
                 {
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:3000/");
+                    spa.UseVueDevelopmentServer();
                 }
             });
         }

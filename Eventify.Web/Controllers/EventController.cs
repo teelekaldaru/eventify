@@ -1,4 +1,5 @@
-﻿using Eventify.Core.Events;
+﻿using System.Threading.Tasks;
+using Eventify.Core.Events;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Eventify.Web.Controllers

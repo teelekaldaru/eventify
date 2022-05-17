@@ -1,4 +1,6 @@
-﻿using Eventify.Common.Classes.Exceptions;
+﻿using System;
+using System.Collections.Generic;
+using Eventify.Common.Classes.Exceptions;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.Loader;
@@ -30,12 +32,6 @@ namespace Eventify.Web
             }
 
             return assemblies.ToArray();
-        }
-
-        public static string GetAppVersion(Assembly assembly)
-        {
-            var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            return fileVersionInfo.ProductVersion ?? throw new SimpleException("App version not specified");
         }
     }
 }
