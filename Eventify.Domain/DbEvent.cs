@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,5 +18,7 @@ namespace Eventify.Domain
         public DateTime StartDate { get; set; }
 
         public string? Description { get; set; }
+
+        public virtual ICollection<DbAttendee> Attendees { get; set; }
     }
 }

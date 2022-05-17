@@ -10,5 +10,10 @@ namespace Eventify.DAL.Events
         {
             return MapperWrapper.Mapper.Map<Event>(dbEvent);
         }
+
+        public static DbEvent ToDbEvent(this Event entity)
+        {
+            return MapperWrapper.Mapper.Map<DbEvent>(entity);
+        }
     }
 }

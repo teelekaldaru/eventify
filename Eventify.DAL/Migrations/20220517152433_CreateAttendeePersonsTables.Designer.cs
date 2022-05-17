@@ -3,15 +3,17 @@ using System;
 using Eventify.DAL.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Eventify.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220517152433_CreateAttendeePersonsTables")]
+    partial class CreateAttendeePersonsTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,47 +31,32 @@ namespace Eventify.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("CompanyId")
-                        .IsRequired()
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("EventId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("LegalPersonId")
+                        .IsRequired()
+                        .HasColumnType("uuid");
+
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("PersonId")
+                    b.Property<Guid?>("PhysicalPersonId")
                         .IsRequired()
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
 
                     b.HasIndex("EventId");
 
-                    b.HasIndex("PersonId");
+                    b.HasIndex("LegalPersonId");
+
+                    b.HasIndex("PhysicalPersonId");
 
                     b.ToTable("Attendee");
-                });
-
-            modelBuilder.Entity("Eventify.Domain.DbCompany", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Company");
                 });
 
             modelBuilder.Entity("Eventify.Domain.DbEvent", b =>
@@ -97,7 +84,22 @@ namespace Eventify.DAL.Migrations
                     b.ToTable("Event");
                 });
 
-            modelBuilder.Entity("Eventify.Domain.DbPerson", b =>
+            modelBuilder.Entity("Eventify.Domain.DbLegalPerson", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LegalPerson");
+                });
+
+            modelBuilder.Entity("Eventify.Domain.DbPhysicalPerson", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -117,34 +119,34 @@ namespace Eventify.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Person");
+                    b.ToTable("PhysicalPerson");
                 });
 
             modelBuilder.Entity("Eventify.Domain.DbAttendee", b =>
                 {
-                    b.HasOne("Eventify.Domain.DbCompany", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Eventify.Domain.DbEvent", "Event")
                         .WithMany("Attendees")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Eventify.Domain.DbPerson", "Person")
+                    b.HasOne("Eventify.Domain.DbLegalPerson", "LegalPerson")
                         .WithMany()
-                        .HasForeignKey("PersonId")
+                        .HasForeignKey("LegalPersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Company");
+                    b.HasOne("Eventify.Domain.DbPhysicalPerson", "PhysicalPerson")
+                        .WithMany()
+                        .HasForeignKey("PhysicalPersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Event");
 
-                    b.Navigation("Person");
+                    b.Navigation("LegalPerson");
+
+                    b.Navigation("PhysicalPerson");
                 });
 
             modelBuilder.Entity("Eventify.Domain.DbEvent", b =>

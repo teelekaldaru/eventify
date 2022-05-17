@@ -24,7 +24,7 @@ namespace Eventify.DAL.Base
             return await context.Set<TEntity>().ToListAsync();
         }
 
-        protected async Task<TEntity> GetAsync<TEntity>(params object[] id) where TEntity : class
+        protected async Task<TEntity?> GetAsync<TEntity>(params object[] id) where TEntity : class
         {
             await using TContext context = CreateContext();
             return await context.Set<TEntity>().FindAsync(id);
@@ -44,13 +44,6 @@ namespace Eventify.DAL.Base
             EntityEntry<TEntity> updated = context.Set<TEntity>().Update(entity);
             await context.SaveChangesAsync();
             return updated.Entity;
-        }
-
-        protected async Task<TEntity> RemoveAsync<TEntity>(params object[] id) where TEntity : class
-        {
-            await using TContext context = CreateContext();
-            TEntity entity = context.Set<TEntity>().Find(id);
-            return await RemoveAsync(entity);
         }
 
         protected async Task<TEntity> RemoveAsync<TEntity>(TEntity entity) where TEntity : class
