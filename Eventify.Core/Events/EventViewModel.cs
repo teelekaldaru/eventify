@@ -11,6 +11,8 @@ namespace Eventify.Core.Events
         public string Name { get; set; }
 
         public DateTime StartDate { get; set; }
+
+        public bool IsPast { get; set; }
     }
 
     public class EventDetailsViewModel

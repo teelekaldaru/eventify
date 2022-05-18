@@ -25,7 +25,9 @@ namespace Eventify.Web
         {
             Core.IoC.Init(services);
             DAL.IoC.Init(services);
+            Common.Utils.IoC.Init(services);
 
+            services.AddCors();
             services.AddControllersWithViews();
 
             services.AddSpaStaticFiles(configuration =>
@@ -62,6 +64,10 @@ namespace Eventify.Web
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>
             {

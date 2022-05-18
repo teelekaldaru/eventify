@@ -1,11 +1,11 @@
-export interface RequestResult<T> {
+export class RequestResult<T> {
     success: boolean;
     successOrOnlyWarnings: boolean;
     messages: SimpleMessage[];
     data: T;
 }
 
-export interface SimpleMessage {
+export class SimpleMessage {
     header: string;
     description: string;
     isSimpleMessage: boolean;

@@ -1,0 +1,10 @@
+<ng-container>
+    <div class="row">
+        <div class="col-md-6">
+            <events-grid [title]="'Tulevased üritused'" [events]="futureEvents" [canDelete]="true"></events-grid>
+        </div>
+        <div class="col-md-6">
+            <events-grid [title]="'Toimunud üritused'" [events]="pastEvents"></events-grid>
+        </div>
+    </div>
+</ng-container>
