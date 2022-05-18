@@ -6,6 +6,13 @@ namespace Eventify.Core.Events
 {
     public class EventGridViewModel
     {
+        public IEnumerable<EventGridRowViewModel> PastEvents { get; set; }
+
+        public IEnumerable<EventGridRowViewModel> FutureEvents { get; set; }
+    }
+
+    public class EventGridRowViewModel
+    {
         public Guid Id { get; set; }
 
         public string Name { get; set; }

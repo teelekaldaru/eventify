@@ -1,10 +1,26 @@
 <ng-container>
-    <div class="row">
+    <div *ngIf="events" class="row">
         <div class="col-md-6">
-            <events-grid [title]="'Tulevased üritused'" [events]="futureEvents" [canDelete]="true"></events-grid>
+            <events-grid
+                [title]="'Tulevased üritused'"
+                [events]="futureEvents"
+                [canDelete]="true"
+                (onDeleted)="removeEvent($event)"
+            ></events-grid>
         </div>
         <div class="col-md-6">
-            <events-grid [title]="'Toimunud üritused'" [events]="pastEvents"></events-grid>
+            <events-grid
+                [title]="'Toimunud üritused'"
+                [events]="pastEvents"
+            ></events-grid>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary" (click)="addEvent()">Lisa üritus</button>
+        </div>
+    </div>
+
+    <event-create-edit></event-create-edit>
 </ng-container>

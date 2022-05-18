@@ -21,6 +21,17 @@ export class EventsComponent implements OnInit {
         this.getEvents();
     }
 
+    addEvent(): void {
+        this.alertService.showNotImplementedMessage();
+    }
+
+    removeEvent(id: string): void {
+        const index = this.events.futureEvents.findIndex(x => x.id === id);
+        if (index > -1) {
+            this.events.futureEvents.splice(index, 1);
+        }
+    }
+
     private getEvents(): void {
         this.eventService.getEvents().pipe(
             first(),

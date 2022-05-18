@@ -10,16 +10,20 @@ import { CommonEndpointService } from './services/common-endpoint.service';
 import { ConfigurationService } from './services/configuration.service';
 import { EventService } from './services/events/event.service';
 import { EventsGridComponent } from './components/events/events-grid/events-grid.component';
+import { EventCreateEditComponent } from './components/events/event-create-edit/event-create-edit.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
         AppComponent,
         EventsComponent,
-        EventsGridComponent
+        EventsGridComponent,
+        EventCreateEditComponent
     ],
     imports: [
         BrowserModule,
-        HttpClientModule
+        HttpClientModule,
+        FormsModule
     ],
     providers: [
         EventService,

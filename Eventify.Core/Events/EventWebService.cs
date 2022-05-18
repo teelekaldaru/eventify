@@ -1,8 +1,6 @@
 ﻿using Eventify.Core.Base.Services;
 using Eventify.DAL.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Eventify.Common.Utils.Logger;
 using Eventify.Common.Utils.Messages.RequestResult;
@@ -11,7 +9,7 @@ namespace Eventify.Core.Events
 {
 	public interface IEventWebService
     {
-        Task<RequestResult<IEnumerable<EventGridViewModel>>> GetEvents();
+        Task<RequestResult<EventGridViewModel>> GetEvents();
 
         Task<RequestResult<EventDetailsViewModel>> GetEventDetails(Guid eventId);
 
@@ -34,17 +32,17 @@ namespace Eventify.Core.Events
 	        _eventSaveValidator = eventSaveValidator;
         }
 
-        public async Task<RequestResult<IEnumerable<EventGridViewModel>>> GetEvents()
+        public async Task<RequestResult<EventGridViewModel>> GetEvents()
         {
             try
             {
                 var events = await _eventRepository.GetEvents();
-                var viewModels = events.Select(x => x.ToGridViewModel());
-                return RequestResult<IEnumerable<EventGridViewModel>>.CreateSuccess(viewModels);
+                var result = events.ToGridViewModel();
+                return RequestResult<EventGridViewModel>.CreateSuccess(result);
             }
             catch (Exception e)
             {
-                return HandleException<IEnumerable<EventGridViewModel>>(e);
+                return HandleException<EventGridViewModel>(e);
             }
         }
 

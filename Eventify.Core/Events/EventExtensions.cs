@@ -1,4 +1,6 @@
 ﻿
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Eventify.Common.Classes.AutoMapper;
 using Eventify.Common.Classes.Events;
@@ -8,9 +10,21 @@ namespace Eventify.Core.Events
 {
     internal static class EventExtensions
     {
-        public static EventGridViewModel ToGridViewModel(this Event entity)
+        public static EventGridViewModel ToGridViewModel(this IEnumerable<Event> events)
         {
-            return MapperWrapper.Mapper.Map<EventGridViewModel>(entity);
+            var rows = events.Select(e => e.ToGridRowViewModel()).ToList();
+            return new EventGridViewModel
+            {
+                FutureEvents = rows.Where(x => !x.IsPast),
+                PastEvents = rows.Where(x => x.IsPast)
+            };
+        }
+
+        public static EventGridRowViewModel ToGridRowViewModel(this Event entity)
+        {
+            var row = MapperWrapper.Mapper.Map<EventGridRowViewModel>(entity);
+            row.IsPast = entity.StartDate < DateTime.Now;
+            return row;
         }
 
         public static EventDetailsViewModel ToViewModel(this Event entity)

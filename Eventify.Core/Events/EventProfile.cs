@@ -7,7 +7,8 @@ namespace Eventify.Core.Events
     {
         public EventProfile()
         {
-            CreateMap<Event, EventGridViewModel>();
+            CreateMap<Event, EventGridRowViewModel>()
+                .ForMember(d => d.IsPast, o => o.Ignore());
 
             CreateMap<Event, EventDetailsViewModel>()
                 .ForMember(d => d.Attendees, o => o.Ignore());
