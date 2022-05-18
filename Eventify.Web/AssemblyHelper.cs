@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Eventify.Common.Classes.Exceptions;
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.Loader;
+using Eventify.Common.Utils.Exceptions;
 
 namespace Eventify.Web
 {
-    public static class AssemblyHelper
+	public static class AssemblyHelper
     {
         public static Assembly[] GetAssemblies()
         {

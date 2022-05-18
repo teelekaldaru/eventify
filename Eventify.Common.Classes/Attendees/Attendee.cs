@@ -15,7 +15,7 @@ namespace Eventify.Common.Classes.Attendees
 
         public DateTime CreatedDate { get; set; }
 
-        public PaymentMethod PaymentMethod { get; set; }
+        public string PaymentMethod { get; set; }
 
         public string AdditionalInfo { get; set; }
 

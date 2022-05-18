@@ -1,15 +1,15 @@
-﻿using Eventify.Common.Classes.Logger;
-using Eventify.Common.Classes.Messages.RequestResult;
-using Eventify.Core.Base.Services;
+﻿using Eventify.Core.Base.Services;
 using Eventify.DAL.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Eventify.Common.Utils.Logger;
+using Eventify.Common.Utils.Messages.RequestResult;
 
 namespace Eventify.Core.Events
 {
-    public interface IEventWebService
+	public interface IEventWebService
     {
         Task<RequestResult<IEnumerable<EventGridViewModel>>> GetEvents();
 
@@ -23,12 +23,15 @@ namespace Eventify.Core.Events
     internal class EventWebService : BaseWebService, IEventWebService
     {
         private readonly IEventRepository _eventRepository;
+        private readonly IEventSaveValidator _eventSaveValidator;
 
         public EventWebService(
             ILogger logger,
-            IEventRepository eventRepository) : base(logger)
+            IEventRepository eventRepository,
+            IEventSaveValidator eventSaveValidator) : base(logger)
         {
-            _eventRepository = eventRepository;
+	        _eventRepository = eventRepository;
+	        _eventSaveValidator = eventSaveValidator;
         }
 
         public async Task<RequestResult<IEnumerable<EventGridViewModel>>> GetEvents()
@@ -64,6 +67,13 @@ namespace Eventify.Core.Events
         {
             try
             {
+	            var validationResult = await _eventSaveValidator.Validate(saveModel);
+	            if (!validationResult.IsValid)
+	            {
+		            return RequestResult<EventDetailsViewModel>.CreateValidation(validationResult);
+
+	            }
+
                 var eventToSave = saveModel.ToEvent();
                 var savedEvent = !saveModel.Id.HasValue
                     ? await _eventRepository.AddEvent(eventToSave)

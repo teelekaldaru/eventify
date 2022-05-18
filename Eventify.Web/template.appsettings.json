@@ -7,7 +7,7 @@
   "Database": "PostgreSQL", // PostgreSQL or MSSQL
 
   "ConnectionStrings": {
-    "MainConnection": "Server=localhost;Port=5432;Database=foodly-main;User Id=username;Password=password;"
+    "MainConnection": "Server=servername;Port=5432;Database=database;User Id=username;Password=password;"
   },
 
   "PostgreSql": {

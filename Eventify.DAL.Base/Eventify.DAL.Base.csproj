@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Eventify.Common.Classes\Eventify.Common.Classes.csproj" />
+    <ProjectReference Include="..\Eventify.Common.Utils\Eventify.Common.Utils.csproj" />
   </ItemGroup>
 
 </Project>

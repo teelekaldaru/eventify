@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Eventify.Common.Classes.Attendees;
-using Eventify.Common.Classes.Exceptions;
+using Eventify.Common.Utils.Exceptions;
 using Eventify.DAL.Base;
 using Eventify.DAL.Infrastructure;
 using Eventify.Domain;
@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Eventify.DAL.Attendees
 {
-    public interface IAttendeeRepository
+	public interface IAttendeeRepository
     {
         Task<Attendee> GetAttendeeById(Guid attendeeId);
 

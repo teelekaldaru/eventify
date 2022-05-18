@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Eventify.Common.Classes.Logger;
-using Eventify.Common.Classes.Messages.RequestResult;
+using Eventify.Common.Utils.Logger;
+using Eventify.Common.Utils.Messages.RequestResult;
 using Eventify.Core.Base.Services;
 using Eventify.DAL.Attendees;
 
 namespace Eventify.Core.Attendees
 {
-    public interface IAttendeeWebService
+	public interface IAttendeeWebService
     {
         Task<RequestResult<AttendeeDetailsViewModel>> GetAttendeeDetails(Guid attendeeId);
 
@@ -19,12 +19,15 @@ namespace Eventify.Core.Attendees
     internal class AttendeeWebService : BaseWebService, IAttendeeWebService
     {
         private readonly IAttendeeRepository _attendeeRepository;
+        private readonly IAttendeeSaveValidator _attendeeSaveValidator;
 
         public AttendeeWebService(
             ILogger logger,
-            IAttendeeRepository attendeeRepository) : base(logger)
+            IAttendeeRepository attendeeRepository,
+            IAttendeeSaveValidator attendeeSaveValidator) : base(logger)
         {
-            _attendeeRepository = attendeeRepository;
+	        _attendeeRepository = attendeeRepository;
+	        _attendeeSaveValidator = attendeeSaveValidator;
         }
 
         public async Task<RequestResult<AttendeeDetailsViewModel>> GetAttendeeDetails(Guid attendeeId)
@@ -32,6 +35,7 @@ namespace Eventify.Core.Attendees
             try
             {
                 var attendee = await _attendeeRepository.GetAttendeeById(attendeeId);
+                return RequestResult<AttendeeDetailsViewModel>.CreateSuccess(new AttendeeDetailsViewModel());
             }
             catch (Exception e)
             {
@@ -43,7 +47,13 @@ namespace Eventify.Core.Attendees
         {
             try
             {
-                throw new NotImplementedException();
+	            var validationResult = await _attendeeSaveValidator.Validate(saveModel);
+	            if (!validationResult.IsValid)
+	            {
+		            return RequestResult<AttendeeGridViewModel>.CreateValidation(validationResult);
+	            }
+
+	            return RequestResult<AttendeeGridViewModel>.CreateSuccess(new AttendeeGridViewModel());
             }
             catch (Exception e)
             {
@@ -55,7 +65,8 @@ namespace Eventify.Core.Attendees
         {
             try
             {
-                throw new NotImplementedException();
+	            await _attendeeRepository.DeleteAttendee(attendeeId);
+	            return RequestResult.CreateSuccess();
             }
             catch (Exception e)
             {

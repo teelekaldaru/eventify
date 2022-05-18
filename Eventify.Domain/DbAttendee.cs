@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Eventify.Common.Classes.Attendees;
 
 namespace Eventify.Domain
 {
@@ -19,9 +18,11 @@ namespace Eventify.Domain
 
         public DateTime CreatedDate { get; set; }
 
-        public PaymentMethod PaymentMethod { get; set; }
+        public int? Participants { get; set; }
 
-        public string AdditionalInfo { get; set; }
+        public string PaymentMethod { get; set; }
+
+        public string AdditionalInformation { get; set; }
 
         public virtual DbEvent Event { get; set; }
 

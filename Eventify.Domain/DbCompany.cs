@@ -12,6 +12,6 @@ namespace Eventify.Domain
 
         public string Name { get; set; }
 
-        public string Code { get; set; }
+        public string RegisterCode { get; set; }
     }
 }

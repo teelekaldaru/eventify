@@ -9,7 +9,9 @@ namespace Eventify.Core
         public static void Init(IServiceCollection services)
         {
             services.AddScoped<IEventWebService, EventWebService>();
+            services.AddScoped<IEventSaveValidator, EventSaveValidator>();
             services.AddScoped<IAttendeeWebService, AttendeeWebService>();
+            services.AddScoped<IAttendeeSaveValidator, AttendeeSaveValidator>();
         }
     }
 }

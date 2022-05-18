@@ -1,7 +1,7 @@
-﻿using Eventify.Common.Classes.Exceptions;
-using Eventify.Common.Classes.Logger;
-using Eventify.Common.Classes.Messages.OperationResult;
-using System;
+﻿using System;
+using Eventify.Common.Utils.Exceptions;
+using Eventify.Common.Utils.Logger;
+using Eventify.Common.Utils.Messages.OperationResult;
 
 namespace Eventify.Core.Base.Services
 {

@@ -1,13 +1,12 @@
 ﻿using System;
-using Eventify.Common.Classes.Attendees;
 
 namespace Eventify.Core.Attendees
 {
-    public class AttendeeSaveModel
+	public class AttendeeSaveModel
     {
         public Guid? Id { get; set; }
 
-        public PaymentMethod? PaymentMethod { get; set; }
+        public string PaymentMethod { get; set; }
 
         public string AdditionalInformation { get; set; }
 

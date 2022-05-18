@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Eventify.Common.Classes.Exceptions;
+using Eventify.Common.Utils.Exceptions;
 
 namespace Eventify.DAL.Events
 {
-    public interface IEventRepository
+	public interface IEventRepository
     {
         Task<IEnumerable<Event>> GetEvents();
 
