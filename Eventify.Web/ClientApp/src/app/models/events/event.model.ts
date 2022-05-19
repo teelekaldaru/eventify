@@ -6,5 +6,6 @@ export class Event {
     startDate: Date;
     address: string;
     description?: string;
+    isPast: boolean;
     attendees: AttendeeGridRow[];
 }

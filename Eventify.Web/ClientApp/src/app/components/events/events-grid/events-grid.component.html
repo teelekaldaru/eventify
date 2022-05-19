@@ -1,19 +1,29 @@
 <table *ngIf="events" class="table table-borderless">
     <thead>
         <tr>
-            <th colspan="4">{{ title }}</th>
+            <th colspan="4" class="text-center">{{ title }}</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let event of events">
-            <td>{{ event.name }}</td>
-            <td>{{ event.startDate }}</td>
-            <td>
-                <button class="btn btn-link" (click)="openDetails(event.id)">Osavõtjad</button>
-            </td>
-            <td *ngIf="canDelete" (click)="deleteEvent(event.id)">
-                <button class="btn btn-link">X</button>
-            </td>
-        </tr>
+        <ng-container *ngTemplateOutlet="events.length > 0 ? rows : noRows"></ng-container>
     </tbody>
 </table>
+
+<ng-template #rows>
+    <tr *ngFor="let event of events">
+        <td>{{ event.name }}</td>
+        <td>{{ event.startDate }}</td>
+        <td>
+            <a class="link" (click)="openDetails(event.id)">Osavõtjad</a>
+        </td>
+        <td *ngIf="canDelete">
+            <a class="link" (click)="deleteEvent(event.id)">X</a>
+        </td>
+    </tr>
+</ng-template>
+
+<ng-template #noRows>
+    <tr>
+        <td colspan="4" class="text-center">Ei leitud ühtegi sündmust</td>
+    </tr>
+</ng-template>

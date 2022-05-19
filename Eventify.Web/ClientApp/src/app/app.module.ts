@@ -17,6 +17,8 @@ import { CommonModule } from '@angular/common';
 import { AttendeesGridComponent } from './components/attendees-grid/attendees-grid.component';
 import { AttendeeCreateEditComponent } from './components/attendee-create-edit/attendee-create-edit.component';
 import { FinanceService } from './services/finances/finance.service';
+import { SubNavbarComponent } from './components/sub-navbar/sub-navbar.component';
+import { AttendeeDetailsComponent } from './components/attendee-details/attendee-details.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +28,9 @@ import { FinanceService } from './services/finances/finance.service';
         EventCreateEditComponent,
         EventDetailsComponent,
         AttendeesGridComponent,
-        AttendeeCreateEditComponent
+        AttendeeCreateEditComponent,
+        SubNavbarComponent,
+        AttendeeDetailsComponent
     ],
     imports: [
         BrowserModule,

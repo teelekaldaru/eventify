@@ -30,6 +30,7 @@ namespace Eventify.Core.Events
         public static EventDetailsViewModel ToViewModel(this Event entity)
         {
             var viewModel = MapperWrapper.Mapper.Map<EventDetailsViewModel>(entity);
+            viewModel.IsPast = entity.StartDate < DateTime.Now;
             viewModel.Attendees = entity.Attendees.Select(x => x.ToGridViewModel());
             return viewModel;
         }

@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-.btn-link {
-    text-decoration: none;
+.link {
+    text-decoration: none !important;
+    color: #6c757d !important;
+    font-weight: 500 !important;
+
+    &:hover {
+        cursor: pointer !important;
+    }
 }
