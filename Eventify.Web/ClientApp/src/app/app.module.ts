@@ -1,3 +1,4 @@
+import { EventDetailsComponent } from './components/events/event-details/event-details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,18 +13,23 @@ import { EventService } from './services/events/event.service';
 import { EventsGridComponent } from './components/events/events-grid/events-grid.component';
 import { EventCreateEditComponent } from './components/events/event-create-edit/event-create-edit.component';
 import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
         AppComponent,
         EventsComponent,
         EventsGridComponent,
-        EventCreateEditComponent
+        EventCreateEditComponent,
+        EventDetailsComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        AppRoutingModule,
+        CommonModule
     ],
     providers: [
         EventService,

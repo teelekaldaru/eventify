@@ -1,0 +1,46 @@
+<div *ngIf="event" class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="row mb-5">
+            <div class="col-md-12">
+                <h5>Osavõtjad</h5>
+                <table class="table table-borderless">
+                    <tbody>
+                        <tr>
+                            <th>Ürituse nimi:</th>
+                            <td>{{ event.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Toimumisaeg:</th>
+                            <td>{{ event.startDate }}</td>
+                        </tr>
+                        <tr>
+                            <th>Koht:</th>
+                            <td>{{ event.address }}</td>
+                        </tr>
+                        <tr>
+                            <th>Osavõtjad:</th>
+                            <td>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>1. Testing</td>
+                                            <td>43883475843758943</td>
+                                            <td><button class="btn btn-link">Vaata</button></td>
+                                            <td><button class="btn btn-link">Kustuta</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Osavõtjate lisamine</h5>
+            </div>
+        </div>
+    </div>
+</div>

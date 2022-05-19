@@ -9,10 +9,10 @@
             <td>{{ event.name }}</td>
             <td>{{ event.startDate }}</td>
             <td>
-                <button (click)="openDetails(event.id)">Osavõtjad</button>
+                <button class="btn btn-link" (click)="openDetails(event.id)">Osavõtjad</button>
             </td>
             <td *ngIf="canDelete" (click)="deleteEvent(event.id)">
-                <button>X</button>
+                <button class="btn btn-link">X</button>
             </td>
         </tr>
     </tbody>

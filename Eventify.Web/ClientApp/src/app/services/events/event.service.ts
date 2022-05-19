@@ -19,7 +19,7 @@ export class EventService {
     }
 
     saveEvent(data: EventSaveModel) {
-        return this.endpoint.post<EventViewModel>(`${this.relativeUrl}`, { data });
+        return this.endpoint.post<EventViewModel>(`${this.relativeUrl}`, data);
     }
 
     deleteEvent(id: string) {

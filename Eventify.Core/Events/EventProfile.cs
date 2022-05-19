@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Eventify.Common.Classes.Events;
 
 namespace Eventify.Core.Events
@@ -13,7 +14,8 @@ namespace Eventify.Core.Events
             CreateMap<Event, EventDetailsViewModel>()
                 .ForMember(d => d.Attendees, o => o.Ignore());
 
-            CreateMap<EventSaveModel, Event>();
+            CreateMap<EventSaveModel, Event>()
+	            .ForMember(d => d.StartDate, o => o.MapFrom(s => DateTime.Parse(s.StartDate)));
         }
     }
 }

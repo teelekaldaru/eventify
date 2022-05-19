@@ -1,9 +1,10 @@
-﻿using Eventify.Domain;
+﻿using Eventify.Common.Utils.Database;
+using Eventify.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Eventify.DAL.Infrastructure
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : BaseDbContext
     {
         public DbSet<DbEvent> Events { get; set; }
 

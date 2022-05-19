@@ -51,9 +51,13 @@ namespace Eventify.Core.Events
             try
             {
                 var eventEntity = await _eventRepository.GetEventById(eventId);
-                return eventEntity == null
-                    ? RequestResult<EventDetailsViewModel>.CreateError($"Event with id {eventId} was not found")
-                    : RequestResult<EventDetailsViewModel>.CreateSuccess(new EventDetailsViewModel());
+                if (eventEntity == null)
+                {
+	                return RequestResult<EventDetailsViewModel>.CreateError($"Event with id {eventId} was not found");
+                }
+
+                var result = eventEntity.ToViewModel();
+                return RequestResult<EventDetailsViewModel>.CreateSuccess(result);
             }
             catch (Exception e)
             {

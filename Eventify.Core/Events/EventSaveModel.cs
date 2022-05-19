@@ -10,7 +10,7 @@ namespace Eventify.Core.Events
 
         public string Address { get; set; }
 
-        public DateTime? StartDate { get; set; }
+        public string StartDate { get; set; }
 
         public string Description { get; set; }
     }
