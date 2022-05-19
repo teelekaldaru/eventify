@@ -1,7 +1,6 @@
-import { AlertService } from './../../services/alert.service';
 import { AttendeeService } from './../../services/attendees/attendee.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AttendeeGridRow } from '../../models/attendee/attendee-grid-view.model';
+import { AttendeeGridRow } from '../../models/attendees/attendee-grid-view.model';
 import { Router } from '@angular/router';
 import { first, map } from 'rxjs/operators';
 
@@ -17,8 +16,7 @@ export class AttendeesGridComponent implements OnInit {
 
     constructor(
         private readonly router: Router,
-        private readonly attendeeService: AttendeeService,
-        private readonly alertService: AlertService
+        private readonly attendeeService: AttendeeService
     ) {}
 
     ngOnInit(): void {}
@@ -36,9 +34,7 @@ export class AttendeesGridComponent implements OnInit {
                     if (response && response.success) {
                         this.onDeleted.emit(id);
                     } else {
-                        this.alertService.showResponseMessages(
-                            response.messages
-                        );
+                        console.log(response.messages);
                     }
                 })
             )

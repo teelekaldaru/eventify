@@ -1,4 +1,4 @@
-import { AttendeeGridRow } from "../attendee/attendee-grid-view.model";
+import { AttendeeGridRow } from "../attendees/attendee-grid-view.model";
 
 export class Event {
     id: string;

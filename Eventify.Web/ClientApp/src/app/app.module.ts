@@ -5,7 +5,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './components/app.component';
 import { EventsComponent } from './components/events/events.component';
-import { AlertService } from './services/alert.service';
 import { AttendeeService } from './services/attendees/attendee.service';
 import { CommonEndpointService } from './services/common-endpoint.service';
 import { ConfigurationService } from './services/configuration.service';
@@ -17,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
 import { AttendeesGridComponent } from './components/attendees-grid/attendees-grid.component';
 import { AttendeeCreateEditComponent } from './components/attendee-create-edit/attendee-create-edit.component';
+import { FinanceService } from './services/finances/finance.service';
 
 @NgModule({
     declarations: [
@@ -38,9 +38,9 @@ import { AttendeeCreateEditComponent } from './components/attendee-create-edit/a
     providers: [
         EventService,
         AttendeeService,
-        AlertService,
         CommonEndpointService,
-        ConfigurationService
+        ConfigurationService,
+        FinanceService
     ],
     bootstrap: [AppComponent],
 })

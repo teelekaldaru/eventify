@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { first, map } from 'rxjs/operators';
 import { EventSave } from 'src/app/models/events/event-save.model';
-import { AlertService } from 'src/app/services/alert.service';
 import { EventService } from 'src/app/services/events/event.service';
 
 @Component({
@@ -15,7 +14,6 @@ export class EventCreateEditComponent implements OnInit {
 
     constructor(
         private readonly eventService: EventService,
-        private readonly alertService: AlertService,
         private readonly router: Router
     ) {}
 
@@ -33,9 +31,7 @@ export class EventCreateEditComponent implements OnInit {
                     if (response && response.success) {
                         this.back();
                     } else {
-                        this.alertService.showResponseMessages(
-                            response.messages
-                        );
+                        console.log(response.messages);
                     }
                 })
             )

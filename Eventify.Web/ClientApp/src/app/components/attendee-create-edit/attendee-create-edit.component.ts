@@ -1,6 +1,10 @@
+import { FinanceService } from './../../services/finances/finance.service';
+import { AttendeeService } from './../../services/attendees/attendee.service';
 import { Router } from '@angular/router';
-import { AttendeeSave, AttendeeType } from './../../models/attendee/attendee-save.model';
+import { AttendeeSave, AttendeeType } from '../../models/attendees/attendee-save.model';
 import { Component, Input, OnInit } from '@angular/core';
+import { first, map } from 'rxjs/operators';
+import { PaymentMethod } from '../../models/finances/payment-method.model';
 
 @Component({
     selector: 'attendee-create-edit',
@@ -14,34 +18,26 @@ export class AttendeeCreateEditComponent implements OnInit {
 
     attendee: AttendeeSave;
     attendeeType: AttendeeType = AttendeeType.Person;
+    paymentMethods: PaymentMethod[] = [];
 
     constructor(
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly attendeeService: AttendeeService,
+        private readonly financeService: FinanceService
     ) {}
 
     ngOnInit(): void {
+        this.getPaymentMethods();
         if (!!this.attendeeId) {
             this.getAttendee();
         } else {
-            this.attendee = {
-                person: {}
-            };
+            this.resetForm();
         }
     }
 
     changeType(type: AttendeeType): void {
         this.attendeeType = type;
-        switch (type) {
-            case AttendeeType.Company:
-                this.attendee.person = null;
-                this.attendee.company = {};
-                break;
-            case AttendeeType.Person:
-            case AttendeeType.Unknown:
-            default:
-                this.attendee.person = {};
-                this.attendee.company = null;
-        }
+        this.resetForm();
     }
 
     save(): void {
@@ -52,7 +48,44 @@ export class AttendeeCreateEditComponent implements OnInit {
         this.router.navigateByUrl(`events`);
     }
 
-    private getAttendee(): void {
+    private resetForm(): void {
+        this.attendee = {};
+        if (this.attendeeType === AttendeeType.Company) {
+            this.attendee.company = {};
+        } else {
+            this.attendee.person = {};
+        }
+    }
 
+    private getAttendee(): void {
+        this.attendeeService
+            .getAttendee(this.attendeeId)
+            .pipe(
+                first(),
+                map((response) => {
+                    if (response && response.success) {
+                        this.attendee = response.data;
+                    } else {
+                        console.log(response.messages);
+                    }
+                })
+            )
+            .subscribe();
+    }
+
+    private getPaymentMethods(): void {
+        this.financeService
+            .getPaymentMethods()
+            .pipe(
+                first(),
+                map((response) => {
+                    if (response && response.success) {
+                        this.paymentMethods = response.data;
+                    } else {
+                        console.log(response.messages);
+                    }
+                })
+            )
+            .subscribe();
     }
 }

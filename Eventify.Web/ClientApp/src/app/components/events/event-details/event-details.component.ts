@@ -1,10 +1,9 @@
-import { AlertService } from 'src/app/services/alert.service';
 import { Event } from 'src/app/models/events/event.model';
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../../services/events/event.service';
 import { ActivatedRoute } from '@angular/router';
 import { first, map } from 'rxjs/operators';
-import { AttendeeGridRow } from '../../../models/attendee/attendee-grid-view.model';
+import { AttendeeGridRow } from '../../../models/attendees/attendee-grid-view.model';
 
 @Component({
     selector: 'event-details',
@@ -18,8 +17,7 @@ export class EventDetailsComponent implements OnInit {
 
     constructor(
         private readonly route: ActivatedRoute,
-        private readonly eventService: EventService,
-        private readonly alertService: AlertService
+        private readonly eventService: EventService
     ) {}
 
     ngOnInit(): void {
@@ -49,9 +47,7 @@ export class EventDetailsComponent implements OnInit {
                         if (response && response.success) {
                             this.event = response.data;
                         } else {
-                            this.alertService.showResponseMessages(
-                                response.messages
-                            );
+                            console.log(response.messages);
                         }
                     })
                 )

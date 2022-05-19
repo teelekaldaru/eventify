@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <form class="form-inline">
+        <form>
             <div *ngIf="showButtons" class="form-group mb-2">
                 <div class="form-check form-check-inline">
                     <input
@@ -37,15 +37,16 @@
             <div class="form-group mb-2">
                 <label for="paymentMethod">Maksmisviis:</label>
                 <select
+                    *ngIf="!!paymentMethods"
                     class="form-select"
                     [(ngModel)]="attendee.paymentMethod"
                     id="paymentMethod"
                     name="paymentMethod"
                 >
                     <option value="" selected hidden></option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    <option *ngFor="let paymentMethod of paymentMethods" [value]="paymentMethod.name">
+                        {{ paymentMethod.name }}
+                    </option>
                 </select>
             </div>
 

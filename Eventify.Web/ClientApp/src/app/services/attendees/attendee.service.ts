@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AttendeeSave } from '../../models/attendee/attendee-save.model';
-import { Attendee } from '../../models/attendee/attendee.model';
+import { AttendeeSave } from '../../models/attendees/attendee-save.model';
+import { Attendee } from '../../models/attendees/attendee.model';
 import { CommonEndpointService } from '../common-endpoint.service';
 
 @Injectable()

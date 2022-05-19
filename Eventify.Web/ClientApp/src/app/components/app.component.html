@@ -1,9 +1,29 @@
 <div class="app-container">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand text-light" href="#">App is running!</a>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a ngPreserveWhitespaces class="navbar-brand" href="#">
+                <img
+                    src="assets/images/logo.svg"
+                    height="50"
+                    width="123"
+                    class="d-inline-block align-top"
+                    alt="logo"
+                />
+            </a>
+        </div>
     </nav>
 
-    <div class="container-fluid pt-3">
-        <router-outlet></router-outlet>
-    </div>
+    <main class="app-content">
+        <div class="container">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">
+            <p class="text-center text-muted">
+                <span>Eventify</span> &copy; 2022
+            </p>
+        </div>
+    </footer>
 </div>

@@ -1,5 +1,6 @@
 ﻿using Eventify.Core.Attendees;
 using Eventify.Core.Events;
+using Eventify.Core.Finance;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Eventify.Core
@@ -12,6 +13,7 @@ namespace Eventify.Core
             services.AddScoped<IEventSaveValidator, EventSaveValidator>();
             services.AddScoped<IAttendeeWebService, AttendeeWebService>();
             services.AddScoped<IAttendeeSaveValidator, AttendeeSaveValidator>();
+            services.AddScoped<IFinanceWebService, FinanceWebService>();
         }
     }
 }

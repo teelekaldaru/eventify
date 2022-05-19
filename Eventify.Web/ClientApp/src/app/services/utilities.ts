@@ -33,32 +33,4 @@ export class Utilities {
 
         return { firstPart: part1, secondPart: part2 };
     }
-
-    public static safeStringify(object) {
-        let result: string;
-
-        try {
-            result = JSON.stringify(object);
-            return result;
-        } catch (error) {}
-
-        const simpleObject = {};
-
-        for (const prop in object) {
-            if (!object.hasOwnProperty(prop)) {
-                continue;
-            }
-            if (typeof object[prop] === 'object') {
-                continue;
-            }
-            if (typeof object[prop] === 'function') {
-                continue;
-            }
-            simpleObject[prop] = object[prop];
-        }
-
-        result = '[***Sanitized Object***]: ' + JSON.stringify(simpleObject);
-
-        return result;
-    }
 }

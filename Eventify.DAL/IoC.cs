@@ -1,5 +1,6 @@
 ﻿using Eventify.DAL.Attendees;
 using Eventify.DAL.Events;
+using Eventify.DAL.Finance;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Eventify.DAL
@@ -10,6 +11,7 @@ namespace Eventify.DAL
         {
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IAttendeeRepository, AttendeeRepository>();
+            services.AddScoped<IFinanceRepository, FinanceRepository>();
         }
     }
 }
