@@ -20,16 +20,7 @@
                         <tr>
                             <th>Osavõtjad:</th>
                             <td>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>1. Testing</td>
-                                            <td>43883475843758943</td>
-                                            <td><button class="btn btn-link">Vaata</button></td>
-                                            <td><button class="btn btn-link">Kustuta</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <attendees-grid [attendees]="event.attendees" (onDeleted)="removeAttendee($event)"></attendees-grid>
                             </td>
                         </tr>
                     </tbody>
@@ -40,6 +31,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h5>Osavõtjate lisamine</h5>
+                <attendee-create-edit [showButtons]="true"></attendee-create-edit>
             </div>
         </div>
     </div>

@@ -15,6 +15,8 @@ import { EventCreateEditComponent } from './components/events/event-create-edit/
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
+import { AttendeesGridComponent } from './components/attendees-grid/attendees-grid.component';
+import { AttendeeCreateEditComponent } from './components/attendee-create-edit/attendee-create-edit.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +24,9 @@ import { CommonModule } from '@angular/common';
         EventsComponent,
         EventsGridComponent,
         EventCreateEditComponent,
-        EventDetailsComponent
+        EventDetailsComponent,
+        AttendeesGridComponent,
+        AttendeeCreateEditComponent
     ],
     imports: [
         BrowserModule,

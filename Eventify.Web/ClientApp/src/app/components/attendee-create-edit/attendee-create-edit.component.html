@@ -1,0 +1,132 @@
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form class="form-inline">
+            <div *ngIf="showButtons" class="form-group mb-2">
+                <div class="form-check form-check-inline">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="attendeeType"
+                        id="person"
+                        [checked]="attendeeType === 10"
+                        (change)="changeType(10)"
+                    />
+                    <label class="form-check-label" for="person">Eraisik</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input
+                        class="form-check-input"
+                        type="radio"
+                        name="attendeeType"
+                        id="company"
+                        [checked]="attendeeType === 20"
+                        (change)="changeType(20)"
+                    />
+                    <label class="form-check-label" for="company"
+                        >Ettevõte</label
+                    >
+                </div>
+            </div>
+
+            <ng-container
+                *ngTemplateOutlet="
+                    attendeeType === 10 ? personForm : companyForm
+                "
+            ></ng-container>
+
+            <div class="form-group mb-2">
+                <label for="paymentMethod">Maksmisviis:</label>
+                <select
+                    class="form-select"
+                    [(ngModel)]="attendee.paymentMethod"
+                    id="paymentMethod"
+                    name="paymentMethod"
+                >
+                    <option value="" selected hidden></option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+
+            <div class="form-group mb-2">
+                <label for="information">Lisainfo:</label>
+                <textarea
+                    [(ngModel)]="attendee.additionalInformation"
+                    class="form-control"
+                    id="information"
+                    name="information"
+                ></textarea>
+            </div>
+
+            <div class="form-group mt-5">
+                <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    (click)="back()"
+                >
+                    Tagasi
+                </button>
+                <button type="submit" class="btn btn-primary" (click)="save()">
+                    Lisa
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<ng-template #personForm>
+    <div class="form-group mb-2">
+        <label for="firstName">Eesnimi:</label>
+        <input
+            [(ngModel)]="attendee.person.firstName"
+            type="text"
+            class="form-control"
+            id="firstName"
+            name="firstName"
+        />
+    </div>
+    <div class="form-group mb-2">
+        <label for="lastName">Perenimi:</label>
+        <input
+            [(ngModel)]="attendee.person.lastName"
+            type="text"
+            class="form-control"
+            id="lastName"
+            name="lastName"
+        />
+    </div>
+    <div class="form-group mb-2">
+        <label for="personalCode">Isikukood:</label>
+        <input
+            [(ngModel)]="attendee.person.personalCode"
+            type="text"
+            class="form-control"
+            id="personalCode"
+            name="personalCode"
+        />
+    </div>
+</ng-template>
+
+<ng-template #companyForm>
+    <div class="form-group mb-2">
+        <label for="companyName">Nimi:</label>
+        <input
+            [(ngModel)]="attendee.company.name"
+            type="text"
+            class="form-control"
+            id="companyName"
+            name="companyName"
+        />
+    </div>
+    <div class="form-group mb-2">
+        <label for="registerCode">Registrikood:</label>
+        <input
+            [(ngModel)]="attendee.company.registerCode"
+            type="text"
+            class="form-control"
+            id="registerCode"
+            name="registerCode"
+        />
+    </div>
+</ng-template>

@@ -1,4 +1,4 @@
-export class EventSaveModel {
+export class EventSave {
     id?: string;
     name?: string;
     startDate?: string;

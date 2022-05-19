@@ -1,4 +1,4 @@
-export class EventGridViewModel {
+export class EventGridView {
     pastEvents: EventGridRow[];
     futureEvents: EventGridRow[];
 }

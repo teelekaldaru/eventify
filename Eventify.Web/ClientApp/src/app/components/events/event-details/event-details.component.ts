@@ -1,9 +1,10 @@
 import { AlertService } from 'src/app/services/alert.service';
-import { EventViewModel } from 'src/app/models/events/event-view.model';
+import { Event } from 'src/app/models/events/event.model';
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../../services/events/event.service';
 import { ActivatedRoute } from '@angular/router';
 import { first, map } from 'rxjs/operators';
+import { AttendeeGridRow } from '../../../models/attendee/attendee-grid-view.model';
 
 @Component({
     selector: 'event-details',
@@ -13,7 +14,7 @@ import { first, map } from 'rxjs/operators';
 export class EventDetailsComponent implements OnInit {
 
     id?: string;
-    event: EventViewModel;
+    event: Event;
 
     constructor(
         private readonly route: ActivatedRoute,
@@ -23,9 +24,19 @@ export class EventDetailsComponent implements OnInit {
 
     ngOnInit(): void {
         this.id = this.route.snapshot.params["id"];
-        console.log(this.id)
         if (!!this.id) {
             this.getEventDetails();
+        }
+    }
+
+    addAttendee(attendee: AttendeeGridRow) {
+        this.event.attendees.push(attendee);
+    }
+
+    removeAttendee(attendeeId: string) {
+        const index = this.event.attendees.findIndex(x => x.id === attendeeId);
+        if (index > -1) {
+            this.event.attendees.splice(index, 1);
         }
     }
 

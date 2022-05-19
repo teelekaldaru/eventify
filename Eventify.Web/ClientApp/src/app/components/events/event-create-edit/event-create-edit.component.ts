@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { first, map } from 'rxjs/operators';
-import { EventSaveModel } from 'src/app/models/events/event-save.model';
+import { EventSave } from 'src/app/models/events/event-save.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { EventService } from 'src/app/services/events/event.service';
 
@@ -11,7 +11,7 @@ import { EventService } from 'src/app/services/events/event.service';
     styleUrls: ['./event-create-edit.component.scss'],
 })
 export class EventCreateEditComponent implements OnInit {
-    event: EventSaveModel;
+    event: EventSave;
 
     constructor(
         private readonly eventService: EventService,

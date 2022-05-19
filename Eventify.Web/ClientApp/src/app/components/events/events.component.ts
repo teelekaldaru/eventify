@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
 import { first, map } from 'rxjs/operators';
-import { EventGridRow, EventGridViewModel } from 'src/app/models/events/event-grid-view.model';
+import { EventGridRow, EventGridView } from 'src/app/models/events/event-grid-view.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { EventService } from 'src/app/services/events/event.service';
 
@@ -11,7 +11,7 @@ import { EventService } from 'src/app/services/events/event.service';
     styleUrls: ['./events.component.scss'],
 })
 export class EventsComponent implements OnInit {
-    events: EventGridViewModel;
+    events: EventGridView;
 
     constructor(
         private readonly eventService: EventService,
