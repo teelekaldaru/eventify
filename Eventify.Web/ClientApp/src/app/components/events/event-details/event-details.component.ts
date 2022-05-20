@@ -4,6 +4,7 @@ import { EventService } from '../../../services/events/event.service';
 import { ActivatedRoute } from '@angular/router';
 import { first, map } from 'rxjs/operators';
 import { AttendeeGridRow } from '../../../models/attendees/attendee-grid-view.model';
+import { Attendee } from '../../../models/attendees/attendee.model';
 
 @Component({
     selector: 'event-details',
@@ -27,8 +28,13 @@ export class EventDetailsComponent implements OnInit {
         }
     }
 
-    addAttendee(attendee: AttendeeGridRow) {
-        this.event.attendees.push(attendee);
+    addAttendee(attendee: Attendee) {
+        const row = {
+            id: attendee.id,
+            code: attendee.code,
+            name: attendee.name
+        }
+        this.event.attendees.push(row);
     }
 
     removeAttendee(attendeeId: string) {
@@ -53,4 +59,6 @@ export class EventDetailsComponent implements OnInit {
                 )
                 .subscribe();
     }
+
+    get hasAttendees(): boolean { return !!this.event && this.event.attendees.length > 0; }
 }

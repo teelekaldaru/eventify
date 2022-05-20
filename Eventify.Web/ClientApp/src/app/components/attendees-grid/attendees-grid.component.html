@@ -3,8 +3,16 @@
         <tr *ngFor="let attendee of attendees">
             <td>{{ attendee.name }}</td>
             <td>{{ attendee.code }}</td>
-            <td><button class="btn btn-link" (click)="openDetails(attendee.id)">Vaata</button></td>
-            <td><button class="btn btn-link" (click)="delete(attendee.id)">Kustuta</button></td>
+            <td>
+                <button class="btn btn-link" (click)="openDetails(attendee.id)">
+                    Vaata
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-link" (click)="delete(attendee.id)">
+                    Kustuta
+                </button>
+            </td>
         </tr>
     </tbody>
 </table>

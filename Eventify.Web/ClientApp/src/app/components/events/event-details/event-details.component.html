@@ -3,7 +3,7 @@
     <div class="col-md-6">
         <div class="row mb-5">
             <div class="col-md-12">
-                <h4>Osavõtjad</h4>
+                <h4 class="mb-5">Osavõtjad</h4>
                 <table class="table table-borderless">
                     <tbody>
                         <tr>
@@ -20,20 +20,26 @@
                         </tr>
                         <tr>
                             <th>Osavõtjad:</th>
-                            <td>
-                                <attendees-grid [attendees]="event.attendees" (onDeleted)="removeAttendee($event)"></attendees-grid>
+                            <td *ngIf="hasAttendees">
+                                <attendees-grid
+                                    [attendees]="event.attendees"
+                                    (onDeleted)="removeAttendee($event)"
+                                ></attendees-grid>
+                            </td>
+                            <td *ngIf="!hasAttendees">
+                                &#8211;
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
-        <div *ngIf="!event.isPast" class="row">
-            <div class="col-md-12">
-                <h4>Osavõtjate lisamine</h4>
-                <attendee-create-edit [showButtons]="true"></attendee-create-edit>
-            </div>
-        </div>
+    </div>
+    <div *ngIf="!event.isPast" class="col-md-6">
+        <h4 class="mb-5">Osavõtjate lisamine</h4>
+        <attendee-create-edit
+            [showButtons]="true"
+            (onSave)="addAttendee($event)"
+        ></attendee-create-edit>
     </div>
 </div>

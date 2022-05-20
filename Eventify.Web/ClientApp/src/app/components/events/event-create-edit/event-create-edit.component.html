@@ -4,25 +4,57 @@
         <form class="form-inline">
             <div class="form-group mb-2">
                 <label for="name">Ürituse nimi:</label>
-                <input [(ngModel)]="event.name" type="text" class="form-control" id="name" name="name">
+                <input
+                    [(ngModel)]="event.name"
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                />
             </div>
             <div class="form-group mb-2">
                 <label for="startDate">Toimumisaeg:</label>
-                <input [(ngModel)]="event.startDate" type="datetime-local" class="form-control" id="startDate" name="startDate" [min]="minDate">
+                <input
+                    [(ngModel)]="event.startDate"
+                    type="datetime-local"
+                    class="form-control"
+                    id="startDate"
+                    name="startDate"
+                    [min]="minDate"
+                />
             </div>
             <div class="form-group mb-2">
                 <label for="address">Koht:</label>
-                <input [(ngModel)]="event.address" type="text" class="form-control" id="address" name="address">
+                <input
+                    [(ngModel)]="event.address"
+                    type="text"
+                    class="form-control"
+                    id="address"
+                    name="address"
+                />
             </div>
 
             <div class="form-group mb-2">
                 <label for="notes">Lisainfo:</label>
-                <textarea [(ngModel)]="event.notes" class="form-control" id="notes" name="notes"></textarea>
+                <textarea
+                    [(ngModel)]="event.notes"
+                    class="form-control"
+                    id="notes"
+                    name="notes"
+                ></textarea>
             </div>
 
             <div class="form-group mt-5">
-                <button type="button" class="btn btn-outline-primary" (click)="back()">Tagasi</button>
-                <button type="submit" class="btn btn-primary" (click)="save()">Lisa</button>
+                <button
+                    type="button"
+                    class="btn btn-outline-primary"
+                    (click)="back()"
+                >
+                    Tagasi
+                </button>
+                <button type="submit" class="btn btn-primary" (click)="save()">
+                    Lisa
+                </button>
             </div>
         </form>
     </div>

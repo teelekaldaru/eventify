@@ -65,7 +65,6 @@ namespace Eventify.Core.Attendees
 	            {
 		            var attendeeToAdd = saveModel.ToEventAttendee();
 		            eventAttendee = await _attendeeRepository.AddEventAttendee(attendeeToAdd);
-
 	            }
 
 	            var result = eventAttendee.ToGridViewModel();
