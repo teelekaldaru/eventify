@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Eventify.Common.Utils.Database;
 
 namespace Eventify.Domain
 {
     [Table("Event")]
-    public class DbEvent
+    public class DbEvent : IHasGuidId
     {
         [Key]
         public Guid Id { get; set; }
@@ -17,8 +18,8 @@ namespace Eventify.Domain
 
         public DateTime StartDate { get; set; }
 
-        public string? Description { get; set; }
+        public string? Notes { get; set; }
 
-        public virtual ICollection<DbAttendee> Attendees { get; set; }
+        public virtual ICollection<DbEventAttendee> EventAttendees { get; set; }
     }
 }

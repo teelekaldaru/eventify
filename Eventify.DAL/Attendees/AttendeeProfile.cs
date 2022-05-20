@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Eventify.Common.Classes.Attendees;
 using Eventify.Domain;
 
@@ -8,9 +9,11 @@ namespace Eventify.DAL.Attendees
     {
         public AttendeeProfile()
         {
-            CreateMap<DbAttendee, Attendee>().ReverseMap();
-            CreateMap<DbPerson, Person>().ReverseMap();
-            CreateMap<DbCompany, Company>().ReverseMap();
+	        CreateMap<DbEventAttendee, EventAttendee>();
+	        CreateMap<EventAttendee, DbEventAttendee>()
+		        .ForMember(d => d.CreatedDate, o => o.MapFrom(s => DateTime.Now));
+
+	        CreateMap<DbAttendee, Attendee>().ReverseMap();
         }
     }
 }

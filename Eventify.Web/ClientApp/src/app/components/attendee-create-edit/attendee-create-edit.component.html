@@ -9,7 +9,7 @@
                         name="attendeeType"
                         id="person"
                         [checked]="attendeeType === 10"
-                        (change)="changeType(10)"
+                        (change)="changeAttendeeType(10)"
                     />
                     <label class="form-check-label" for="person">Eraisik</label>
                 </div>
@@ -20,7 +20,7 @@
                         name="attendeeType"
                         id="company"
                         [checked]="attendeeType === 20"
-                        (change)="changeType(20)"
+                        (change)="changeAttendeeType(20)"
                     />
                     <label class="form-check-label" for="company"
                         >Ettevõte</label
@@ -28,11 +28,7 @@
                 </div>
             </div>
 
-            <ng-container
-                *ngTemplateOutlet="
-                    attendeeType === 10 ? personForm : companyForm
-                "
-            ></ng-container>
+            <ng-container *ngTemplateOutlet="attendeeType === 10 ? personForm : companyForm"></ng-container>
 
             <div class="form-group mb-2">
                 <label for="paymentMethod">Maksmisviis:</label>
@@ -51,12 +47,12 @@
             </div>
 
             <div class="form-group mb-2">
-                <label for="information">Lisainfo:</label>
+                <label for="notes">Lisainfo:</label>
                 <textarea
-                    [(ngModel)]="attendee.additionalInformation"
+                    [(ngModel)]="attendee.notes"
                     class="form-control"
-                    id="information"
-                    name="information"
+                    id="notes"
+                    name="notes"
                 ></textarea>
             </div>
 
@@ -80,7 +76,7 @@
     <div class="form-group mb-2">
         <label for="firstName">Eesnimi:</label>
         <input
-            [(ngModel)]="attendee.person.firstName"
+            [(ngModel)]="attendee.firstName"
             type="text"
             class="form-control"
             id="firstName"
@@ -90,7 +86,7 @@
     <div class="form-group mb-2">
         <label for="lastName">Perenimi:</label>
         <input
-            [(ngModel)]="attendee.person.lastName"
+            [(ngModel)]="attendee.lastName"
             type="text"
             class="form-control"
             id="lastName"
@@ -100,7 +96,7 @@
     <div class="form-group mb-2">
         <label for="personalCode">Isikukood:</label>
         <input
-            [(ngModel)]="attendee.person.personalCode"
+            [(ngModel)]="attendee.personalCode"
             type="text"
             class="form-control"
             id="personalCode"
@@ -113,7 +109,7 @@
     <div class="form-group mb-2">
         <label for="companyName">Nimi:</label>
         <input
-            [(ngModel)]="attendee.company.name"
+            [(ngModel)]="attendee.name"
             type="text"
             class="form-control"
             id="companyName"
@@ -123,7 +119,7 @@
     <div class="form-group mb-2">
         <label for="registerCode">Registrikood:</label>
         <input
-            [(ngModel)]="attendee.company.registerCode"
+            [(ngModel)]="attendee.registerCode"
             type="text"
             class="form-control"
             id="registerCode"

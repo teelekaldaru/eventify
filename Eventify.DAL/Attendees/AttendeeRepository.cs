@@ -11,11 +11,13 @@ namespace Eventify.DAL.Attendees
 {
 	public interface IAttendeeRepository
     {
-        Task<Attendee> GetAttendeeById(Guid attendeeId);
+        Task<EventAttendee> GetEventAttendeeById(Guid eventAttendeeId);
 
-        Task<Attendee> AddAttendee(Attendee attendee);
+        Task<EventAttendee> AddEventAttendee(EventAttendee eventAttendee);
 
-        Task DeleteAttendee(Guid attendeeId);
+        Task<EventAttendee> UpdateEventAttendee(Guid id, EventAttendeeUpdateSet updateSet);
+
+        Task DeleteEventAttendee(Guid eventAttendeeId);
     }
 
     internal class AttendeeRepository : BaseRepository<AppDbContext>, IAttendeeRepository
@@ -24,52 +26,63 @@ namespace Eventify.DAL.Attendees
         {
         }
 
-        public async Task<Attendee> GetAttendeeById(Guid attendeeId)
+        public async Task<EventAttendee> GetEventAttendeeById(Guid eventAttendeeId)
         {
             await using var context = CreateContext();
-            var dbAttendee = await context.Attendees
-                .Include(x => x.Person)
-                .Include(x => x.Company)
-                .FirstOrDefaultAsync(x => x.Id == attendeeId);
+            var dbEventAttendee = await context.EventAttendees
+	            .Include(x => x.Attendee)
+	            .FirstOrDefaultAsync(x => x.Id == eventAttendeeId);
             
-            return dbAttendee.ToAttendee();
+            return dbEventAttendee.ToEventAttendee();
         }
 
-        public async Task<Attendee> AddAttendee(Attendee attendee)
+        public async Task<EventAttendee> AddEventAttendee(EventAttendee eventAttendee)
         {
             await using var context = CreateContext();
-            await using var transaction = context.Database.BeginTransaction();
+            await using var transaction = await context.Database.BeginTransactionAsync();
 
-            var dbAttendee = attendee.ToDbAttendee();
-            if (attendee.Person != null)
-            {
-                var dbPerson = attendee.Person.ToDbPerson();
-                dbAttendee.PersonId = context.Persons.Add(dbPerson).Entity.Id;
-            }
+            var dbAttendee = eventAttendee.Attendee.ToDbAttendee();
+            var dbAttendeeEntity = context.Attendees.Add(dbAttendee).Entity;
 
-            if (attendee.Company != null)
-            {
-                var dbCompany = attendee.Company.ToDbCompany();
-                dbAttendee.CompanyId = context.Companies.Add(dbCompany).Entity.Id;
-            }
-
-            dbAttendee = context.Attendees.Add(dbAttendee).Entity;
+            var dbEventAttendee = eventAttendee.ToDbEventAttendee();
+            dbEventAttendee.AttendeeId = dbAttendeeEntity.Id;
+            var dbEventAttendeeEntity = context.EventAttendees.Add(dbEventAttendee).Entity;
 
             await context.SaveChangesAsync();
-            transaction.Commit();
+            await transaction.CommitAsync();
 
-            return dbAttendee.ToAttendee();
+            return dbEventAttendeeEntity.ToEventAttendee();
         }
 
-        public async Task DeleteAttendee(Guid attendeeId)
+        public async Task<EventAttendee> UpdateEventAttendee(Guid id, EventAttendeeUpdateSet updateSet)
         {
-            var dbAttendee = await GetAsync<DbAttendee>(attendeeId);
-            if (dbAttendee == null)
+	        await using var context = CreateContext();
+
+	        var dbEventAttendee = await context.EventAttendees
+		        .Include(x => x.Attendee)
+		        .FirstOrDefaultAsync(x => x.Id == id);
+
+	        if (dbEventAttendee == null)
+	        {
+		        throw new SimpleException($"Event attendee with id {id} does not exist");
+	        }
+
+            dbEventAttendee.ApplyUpdateSet(updateSet);
+            context.Entry(dbEventAttendee).State = EntityState.Modified;
+
+            await context.SaveChangesAsync();
+            return dbEventAttendee.ToEventAttendee();
+        }
+
+        public async Task DeleteEventAttendee(Guid eventAttendeeId)
+        {
+            var dbEventAttendee = await GetAsync<DbEventAttendee>(eventAttendeeId);
+            if (dbEventAttendee == null)
             {
-                throw new SimpleException($"Attendee with id {attendeeId} does not exist");
+                throw new SimpleException($"Event attendee with id {eventAttendeeId} does not exist");
             }
 
-            await RemoveAsync(dbAttendee);
+            await RemoveAsync(dbEventAttendee);
         }
     }
 }

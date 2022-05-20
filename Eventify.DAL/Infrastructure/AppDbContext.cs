@@ -8,11 +8,11 @@ namespace Eventify.DAL.Infrastructure
     {
         public DbSet<DbEvent> Events { get; set; }
 
+        public DbSet<DbEventAttendee> EventAttendees { get; set; }
+
         public DbSet<DbAttendee> Attendees { get; set; }
 
-        public DbSet<DbCompany> Companies { get; set; }
-
-        public DbSet<DbPerson> Persons { get; set; }
+        public DbSet<DbPaymentMethod> PaymentMethods { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -22,10 +22,10 @@ namespace Eventify.DAL.Infrastructure
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<DbAttendee>().HasOne(x => x.Event).WithMany(x => x.Attendees).HasForeignKey(x => x.EventId);
-            builder.Entity<DbAttendee>().HasOne(x => x.Person).WithMany().HasForeignKey(x => x.PersonId);
-            builder.Entity<DbAttendee>().HasOne(x => x.Company).WithMany().HasForeignKey(x => x.CompanyId);
-            builder.Entity<DbAttendee>().HasOne<DbPaymentMethod>().WithMany().HasForeignKey(x => x.PaymentMethod);
+            builder.Entity<DbEventAttendee>().HasOne(x => x.Event).WithMany(x => x.EventAttendees).HasForeignKey(x => x.EventId);
+            builder.Entity<DbEventAttendee>().HasOne(x => x.Attendee).WithMany().HasForeignKey(x => x.AttendeeId);
+
+            builder.Entity<DbEventAttendee>().HasOne<DbPaymentMethod>().WithMany().HasForeignKey(x => x.PaymentMethod);
         }
     }
 }

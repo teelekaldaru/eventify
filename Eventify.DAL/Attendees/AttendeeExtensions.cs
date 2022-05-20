@@ -6,34 +6,54 @@ namespace Eventify.DAL.Attendees
 {
     internal static class AttendeeExtensions
     {
+        public static EventAttendee ToEventAttendee(this DbEventAttendee dbEventAttendee)
+        {
+            return MapperWrapper.Mapper.Map<EventAttendee>(dbEventAttendee);
+        }
+
+        public static DbEventAttendee ToDbEventAttendee(this EventAttendee eventAttendee)
+        {
+            return MapperWrapper.Mapper.Map<DbEventAttendee>(eventAttendee);
+        }
+
         public static Attendee ToAttendee(this DbAttendee dbAttendee)
         {
-            return MapperWrapper.Mapper.Map<Attendee>(dbAttendee);
+	        return MapperWrapper.Mapper.Map<Attendee>(dbAttendee);
         }
 
         public static DbAttendee ToDbAttendee(this Attendee attendee)
         {
-            return MapperWrapper.Mapper.Map<DbAttendee>(attendee);
+	        return MapperWrapper.Mapper.Map<DbAttendee>(attendee);
         }
 
-        public static Person ToPerson(this DbPerson dbPerson)
+        public static void ApplyUpdateSet(this DbEventAttendee? entity, EventAttendeeUpdateSet? updateSet)
         {
-            return MapperWrapper.Mapper.Map<Person>(dbPerson);
-        }
+	        if (entity == null || updateSet == null)
+	        {
+		        return;
+	        }
 
-        public static DbPerson ToDbPerson(this Person person)
-        {
-            return MapperWrapper.Mapper.Map<DbPerson>(person);
-        }
+	        if (!string.IsNullOrWhiteSpace(updateSet.AttendeeCode))
+	        {
+		        entity.Attendee.Code = updateSet.AttendeeCode;
+	        }
 
-        public static Company ToCompany(this DbCompany dbCompany)
-        {
-            return MapperWrapper.Mapper.Map<Company>(dbCompany);
-        }
+	        if (!string.IsNullOrWhiteSpace(updateSet.AttendeeName))
+	        {
+		        entity.Attendee.Name = updateSet.AttendeeName;
+	        }
 
-        public static DbCompany ToDbCompany(this Company company)
-        {
-            return MapperWrapper.Mapper.Map<DbCompany>(company);
+            if (!string.IsNullOrWhiteSpace(updateSet.PaymentMethod))
+	        {
+		        entity.PaymentMethod = updateSet.PaymentMethod;
+	        }
+
+	        if (updateSet.Participants.HasValue)
+	        {
+		        entity.Participants = updateSet.Participants;
+	        }
+
+	        entity.Notes = updateSet.Notes;
         }
     }
 }

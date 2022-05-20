@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Eventify.Common.Classes.Attendees;
 using Eventify.Common.Utils.Logger;
 using Eventify.Common.Utils.Messages.RequestResult;
 using Eventify.Core.Base.Services;
@@ -9,11 +10,11 @@ namespace Eventify.Core.Attendees
 {
 	public interface IAttendeeWebService
     {
-        Task<RequestResult<AttendeeDetailsViewModel>> GetAttendeeDetails(Guid attendeeId);
+        Task<RequestResult<AttendeeViewModel>> GetEventAttendee(Guid attendeeId);
 
         Task<RequestResult<AttendeeGridViewModel>> SaveAttendee(AttendeeSaveModel saveModel);
 
-        Task<RequestResult> DeleteAttendee(Guid attendeeId);
+        Task<RequestResult> RemoveAttendeeFromEvent(Guid eventAttendeeId);
     }
 
     internal class AttendeeWebService : BaseWebService, IAttendeeWebService
@@ -30,16 +31,17 @@ namespace Eventify.Core.Attendees
 	        _attendeeSaveValidator = attendeeSaveValidator;
         }
 
-        public async Task<RequestResult<AttendeeDetailsViewModel>> GetAttendeeDetails(Guid attendeeId)
+        public async Task<RequestResult<AttendeeViewModel>> GetEventAttendee(Guid attendeeId)
         {
             try
             {
-                var attendee = await _attendeeRepository.GetAttendeeById(attendeeId);
-                return RequestResult<AttendeeDetailsViewModel>.CreateSuccess(new AttendeeDetailsViewModel());
+                var attendee = await _attendeeRepository.GetEventAttendeeById(attendeeId);
+                var result = attendee.ToViewModel();
+                return RequestResult<AttendeeViewModel>.CreateSuccess(result);
             }
             catch (Exception e)
             {
-                return HandleException<AttendeeDetailsViewModel>(e);
+                return HandleException<AttendeeViewModel>(e);
             }
         }
 
@@ -53,7 +55,21 @@ namespace Eventify.Core.Attendees
 		            return RequestResult<AttendeeGridViewModel>.CreateValidation(validationResult);
 	            }
 
-	            return RequestResult<AttendeeGridViewModel>.CreateSuccess(new AttendeeGridViewModel());
+	            EventAttendee eventAttendee;
+	            if (saveModel.Id.HasValue)
+	            {
+		            var updateSet = saveModel.ToUpdateSet();
+		            eventAttendee = await _attendeeRepository.UpdateEventAttendee(saveModel.Id.Value, updateSet);
+	            }
+	            else
+	            {
+		            var attendeeToAdd = saveModel.ToEventAttendee();
+		            eventAttendee = await _attendeeRepository.AddEventAttendee(attendeeToAdd);
+
+	            }
+
+	            var result = eventAttendee.ToGridViewModel();
+                return RequestResult<AttendeeGridViewModel>.CreateSuccess(result);
             }
             catch (Exception e)
             {
@@ -61,11 +77,11 @@ namespace Eventify.Core.Attendees
             }
         }
 
-        public async Task<RequestResult> DeleteAttendee(Guid attendeeId)
+        public async Task<RequestResult> RemoveAttendeeFromEvent(Guid eventAttendeeId)
         {
             try
             {
-	            await _attendeeRepository.DeleteAttendee(attendeeId);
+	            await _attendeeRepository.DeleteEventAttendee(eventAttendeeId);
 	            return RequestResult.CreateSuccess();
             }
             catch (Exception e)

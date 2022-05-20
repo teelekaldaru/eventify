@@ -40,8 +40,7 @@ namespace Eventify.DAL.Events
         {
             await using var context = CreateContext();
             var dbEvent = await context.Events
-                .Include(x => x.Attendees).ThenInclude(x => x.Person)
-                .Include(x => x.Attendees).ThenInclude(x => x.Company)
+                .Include(x => x.EventAttendees).ThenInclude(x => x.Attendee)
                 .FirstOrDefaultAsync(x => x.Id == eventId);
 
             return dbEvent.ToEvent();

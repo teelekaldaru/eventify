@@ -29,7 +29,7 @@ namespace Eventify.Common.Utils.Messages.OperationResult
             return new OperationResult<T>
             {
                 Messages = operationResult?.Messages ?? Enumerable.Empty<SimpleMessage>(),
-                Data = default,
+                Data = default!,
                 Success = false
             };
         }
@@ -39,7 +39,7 @@ namespace Eventify.Common.Utils.Messages.OperationResult
             return new OperationResult<T>
             {
                 Messages = messages,
-                Data = default
+                Data = default!
             };
         }
 
@@ -48,12 +48,12 @@ namespace Eventify.Common.Utils.Messages.OperationResult
             return new OperationResult<T>
             {
                 Messages = results.Where((x) => !x.Success).SelectMany((x) => x.Messages),
-                Data = default,
+                Data = default!,
                 Success = false
             };
         }
 
-        public static OperationResult<T> CreateError(Exception e, T data = default)
+        public static OperationResult<T> CreateError(Exception e, T data = default!)
         {
 	        var messages = e is SimpleException ex ? ex.Messages : SimpleMessage.Error(e.Message, e.LogInnerExceptions()).MakeCollection();
             return new OperationResult<T>
@@ -68,11 +68,11 @@ namespace Eventify.Common.Utils.Messages.OperationResult
             return new OperationResult<T>
             {
                 Messages = SimpleMessage.Error(header, e.Message).MakeCollection(),
-                Data = default
+                Data = default!
             };
         }
 
-        public static OperationResult<T> CreateError(IEnumerable<string> messages, T data = default)
+        public static OperationResult<T> CreateError(IEnumerable<string> messages, T data = default!)
         {
             return new OperationResult<T>
             {
@@ -81,7 +81,7 @@ namespace Eventify.Common.Utils.Messages.OperationResult
             };
         }
 
-        public static OperationResult<T> CreateError(string message, T data = default)
+        public static OperationResult<T> CreateError(string message, T data = default!)
         {
             return new OperationResult<T>
             {
@@ -90,7 +90,7 @@ namespace Eventify.Common.Utils.Messages.OperationResult
             };
         }
 
-        public static OperationResult<T> CreateError(string header, string message, T data = default)
+        public static OperationResult<T> CreateError(string header, string message, T data = default!)
         {
             return new OperationResult<T>
             {
@@ -119,7 +119,7 @@ namespace Eventify.Common.Utils.Messages.OperationResult
             };
         }
 
-        public static OperationResult<T> CreateValidationErrors(ValidationMessages messages, T data = default)
+        public static OperationResult<T> CreateValidationErrors(ValidationMessages messages, T data = default!)
         {
             return new OperationResult<T>
             {
@@ -128,7 +128,7 @@ namespace Eventify.Common.Utils.Messages.OperationResult
             };
         }
 
-        public static OperationResult<T> CreateValidationErrors(string header, string description, ValidationMessageSeverity severity, T data = default)
+        public static OperationResult<T> CreateValidationErrors(string header, string description, ValidationMessageSeverity severity, T data = default!)
         {
             return new OperationResult<T>
             {

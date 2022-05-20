@@ -17,7 +17,7 @@ namespace Eventify.Core.Events
 
         public string Name { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public string StartDate { get; set; }
 
         public bool IsPast { get; set; }
     }
@@ -30,11 +30,11 @@ namespace Eventify.Core.Events
 
         public string Address { get; set; }
 
-        public DateTime StartDate { get; set; }
-
-        public string Description { get; set; }
+        public string StartDate { get; set; }
 
         public bool IsPast { get; set; }
+
+        public string Notes { get; set; }
 
         public IEnumerable<AttendeeGridViewModel> Attendees { get; set; }
     }

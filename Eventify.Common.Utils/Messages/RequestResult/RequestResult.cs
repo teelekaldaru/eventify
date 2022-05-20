@@ -16,7 +16,7 @@ namespace Eventify.Common.Utils.Messages.RequestResult
         {
         }
 
-        public static RequestResult<T> Create(IEnumerable<SimpleMessage> messages, T data = default)
+        public static RequestResult<T> Create(IEnumerable<SimpleMessage> messages, T data = default!)
         {
             return new RequestResult<T>
             {
@@ -25,7 +25,7 @@ namespace Eventify.Common.Utils.Messages.RequestResult
             };
         }
 
-        public static RequestResult<T> Create(ValidationMessages messages, T data = default)
+        public static RequestResult<T> Create(ValidationMessages messages, T data = default!)
         {
             return Create(messages.Select((x) => x.Message), data);
         }
@@ -35,27 +35,27 @@ namespace Eventify.Common.Utils.Messages.RequestResult
             return Create(SimpleMessage.Simple("Success!", message).MakeCollection(), data);
         }
 
-        public static RequestResult<T> CreateError(IEnumerable<string> messages, T data = default)
+        public static RequestResult<T> CreateError(IEnumerable<string> messages, T data = default!)
         {
             return Create(messages.Select((message) => SimpleMessage.Error(message, null)), data);
         }
 
-        public static RequestResult<T> CreateError(string message, T data = default)
+        public static RequestResult<T> CreateError(string message, T data = default!)
         {
             return CreateError(message.MakeCollection(), data);
         }
 
-        public static RequestResult<T> CreateError(string header, string description, T data = default)
+        public static RequestResult<T> CreateError(string header, string description, T data = default!)
         {
             return Create(SimpleMessage.Error(header, description).MakeCollection(), data);
         }
 
-        public static RequestResult<T> CreateValidation(string header, string description, ValidationMessageSeverity severity, T data = default)
+        public static RequestResult<T> CreateValidation(string header, string description, ValidationMessageSeverity severity, T data = default!)
         {
             return Create(SimpleMessage.Validation(header, description, severity).MakeCollection(), data);
         }
 
-        public static RequestResult<T> CreateValidation(ValidationMessages messages, T data = default)
+        public static RequestResult<T> CreateValidation(ValidationMessages messages, T data = default!)
         {
             return Create(messages, data);
         }
@@ -64,16 +64,16 @@ namespace Eventify.Common.Utils.Messages.RequestResult
         {
             return new RequestResult<T>
             {
-                Data = default,
+                Data = default!,
                 IsExplicitSuccess = false,
                 Messages = operationResult.Messages
             };
         }
 
-        public static RequestResult<T> CreateErrorFromOperationResult(IOperationResult operationResult, string headerOverride)
+        public static RequestResult<T?> CreateErrorFromOperationResult(IOperationResult operationResult, string headerOverride)
         {
             var messages = operationResult.Messages.Select((x) => SimpleMessage.CopyAndOverrideHeader(x, headerOverride));
-            return new RequestResult<T>
+            return new RequestResult<T?>
             {
                 Data = default,
                 IsExplicitSuccess = false,
@@ -86,7 +86,7 @@ namespace Eventify.Common.Utils.Messages.RequestResult
             return new RequestResult<T>
             {
                 Messages = results.Where((x) => !x.Success).SelectMany((x) => x.Messages),
-                Data = default,
+                Data = default!,
                 IsExplicitSuccess = false
             };
         }

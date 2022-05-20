@@ -15,10 +15,10 @@ namespace Eventify.Web.Controllers
             _attendeeWebService = attendeeWebService;
         }
 
-        [HttpGet("{attendeeId}")]
-        public async Task<JsonResult> GetAttendee(Guid attendeeId)
+        [HttpGet("{eventAttendeeId}")]
+        public async Task<JsonResult> GetEventAttendee(Guid eventAttendeeId)
         {
-            var result = await _attendeeWebService.GetAttendeeDetails(attendeeId);
+            var result = await _attendeeWebService.GetEventAttendee(eventAttendeeId);
             return new JsonResult(result);
         }
 
@@ -29,10 +29,10 @@ namespace Eventify.Web.Controllers
             return new JsonResult(result);
         }
 
-        [HttpDelete("{attendeeId}")]
-        public async Task<JsonResult> DeleteEvent(Guid attendeeId)
+        [HttpDelete("{eventAttendeeId}")]
+        public async Task<JsonResult> RemoveAttendeeFromEvent(Guid eventAttendeeId)
         {
-            var result = await _attendeeWebService.DeleteAttendee(attendeeId);
+            var result = await _attendeeWebService.RemoveAttendeeFromEvent(eventAttendeeId);
             return new JsonResult(result);
         }
     }

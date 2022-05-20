@@ -1,10 +1,11 @@
 import { FinanceService } from './../../services/finances/finance.service';
 import { AttendeeService } from './../../services/attendees/attendee.service';
 import { Router } from '@angular/router';
-import { AttendeeSave, AttendeeType } from '../../models/attendees/attendee-save.model';
+import { AttendeeSave } from '../../models/attendees/attendee-save.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { first, map } from 'rxjs/operators';
 import { PaymentMethod } from '../../models/finances/payment-method.model';
+import { AttendeeType } from '../../models/attendees/attendee.model';
 
 @Component({
     selector: 'attendee-create-edit',
@@ -35,7 +36,7 @@ export class AttendeeCreateEditComponent implements OnInit {
         }
     }
 
-    changeType(type: AttendeeType): void {
+    changeAttendeeType(type: AttendeeType): void {
         this.attendeeType = type;
         this.resetForm();
     }
@@ -49,12 +50,9 @@ export class AttendeeCreateEditComponent implements OnInit {
     }
 
     private resetForm(): void {
-        this.attendee = {};
-        if (this.attendeeType === AttendeeType.Company) {
-            this.attendee.company = {};
-        } else {
-            this.attendee.person = {};
-        }
+        this.attendee = {
+            attendeeType: this.attendeeType
+        };
     }
 
     private getAttendee(): void {

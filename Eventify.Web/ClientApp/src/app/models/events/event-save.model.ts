@@ -3,5 +3,5 @@ export class EventSave {
     name?: string;
     startDate?: string;
     address?: string;
-    description?: string;
+    notes?: string;
 }

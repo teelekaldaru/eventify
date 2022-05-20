@@ -1,33 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Eventify.Common.Classes.Attendees;
+using Eventify.Common.Utils.Database;
 
 namespace Eventify.Domain
 {
     [Table("Attendee")]
-    public class DbAttendee
+    public class DbAttendee : IHasGuidId
     {
-        [Key]
-        public Guid Id { get; set; }
+	    [Key]
+	    public Guid Id { get; set; }
 
-        public Guid EventId { get; set; }
+	    public string Name { get; set; }
 
-        public Guid? PersonId { get; set; }
-        
-        public Guid? CompanyId { get; set; }
+	    public string Code { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public AttendeeType AttendeeType { get; set; }
 
-        public int? Participants { get; set; }
-
-        public string PaymentMethod { get; set; }
-
-        public string AdditionalInformation { get; set; }
-
-        public virtual DbEvent Event { get; set; }
-
-        public virtual DbPerson Person { get; set; }
-
-        public virtual DbCompany Company { get; set; }
+        public virtual ICollection<DbEventAttendee> AttendedEvents { get; set; }
     }
 }
