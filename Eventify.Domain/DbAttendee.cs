@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 using Eventify.Common.Classes.Attendees;
 using Eventify.Common.Utils.Database;
 
@@ -16,8 +15,7 @@ namespace Eventify.Domain
 
         public string Name { get; set; }
 
-        [AllowNull]
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
         public string Code { get; set; }
 

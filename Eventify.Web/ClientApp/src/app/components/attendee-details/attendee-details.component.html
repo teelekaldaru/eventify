@@ -2,10 +2,77 @@
 
 <div *ngIf="!!attendee" class="row justify-content-center">
     <div class="col-md-6">
-        <attendee-create-edit
-            [attendee]="attendee"
-            [eventId]="attendee.eventId"
-            (onSave)="back()"
-        ></attendee-create-edit>
+        <ng-container *ngTemplateOutlet="!isEditMode ? details : editor"></ng-container>
     </div>
 </div>
+
+<ng-template #details>
+    <ng-container *ngTemplateOutlet="attendee.attendeeType === 10 ? personDetails : companyDetails"></ng-container>
+    <div class="d-flex justify-content-end mt-4 mb-5">
+        <button type="button" class="btn btn-primary" (click)="edit()">
+            Muuda
+        </button>
+    </div>
+</ng-template>
+
+<ng-template #personDetails>
+    <table class="table table-borderless">
+        <tbody>
+            <tr>
+                <th>Eesnimi:</th>
+                <td>{{ attendee.name }}</td>
+            </tr>
+            <tr>
+                <th>Perenimi:</th>
+                <td>{{ attendee.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Isikukood:</th>
+                <td>{{ attendee.code }}</td>
+            </tr>
+            <tr>
+                <th>Maksmisviis:</th>
+                <td>{{ attendee.paymentMethod }}</td>
+            </tr>
+            <tr>
+                <th>Lisainfo:</th>
+                <td>{{ attendee.notes || '&#8211;' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</ng-template>
+
+<ng-template #companyDetails>
+    <table class="table table-borderless">
+        <tbody>
+            <tr>
+                <th>Nimi:</th>
+                <td>{{ attendee.name }}</td>
+            </tr>
+            <tr>
+                <th>Registrikood:</th>
+                <td>{{ attendee.code }}</td>
+            </tr>
+            <tr>
+                <th>Osalejate arv:</th>
+                <td>{{ attendee.participants }}</td>
+            </tr>
+            <tr>
+                <th>Maksmisviis:</th>
+                <td>{{ attendee.paymentMethod }}</td>
+            </tr>
+            <tr>
+                <th>Lisainfo:</th>
+                <td>{{ attendee.notes || '&#8211;' }}</td>
+            </tr>
+        </tbody>
+    </table>
+</ng-template>
+
+<ng-template #editor>
+    <attendee-create-edit
+        [attendee]="attendee"
+        [eventId]="attendee.eventId"
+        (onSave)="onSaved()"
+    ></attendee-create-edit>
+</ng-template>

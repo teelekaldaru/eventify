@@ -28,6 +28,8 @@ namespace Eventify.Core.Attendees
 
         public string Notes { get; set; }
 
+        public int? Participants { get; set; }
+
         public AttendeeType AttendeeType { get; set; }
     }
 }

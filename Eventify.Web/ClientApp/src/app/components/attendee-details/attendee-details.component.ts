@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { first, map } from 'rxjs/operators';
 import { Attendee } from 'src/app/models/attendees/attendee.model';
 import { AttendeeService } from 'src/app/services/attendees/attendee.service';
@@ -13,10 +13,10 @@ export class AttendeeDetailsComponent implements OnInit {
 
   id?: string;
   attendee: Attendee;
+  isEditMode: boolean = false;
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly router: Router,
     private readonly attendeeService: AttendeeService
   ) { }
 
@@ -27,8 +27,12 @@ export class AttendeeDetailsComponent implements OnInit {
     }
   }
 
-  back(): void {
-    this.router.navigateByUrl(`event/${this.attendee.eventId}`);
+  edit(): void {
+    this.isEditMode = true;
+  }
+
+  onSaved(): void {
+    this.isEditMode = false;
   }
 
   private getAttendee(): void {

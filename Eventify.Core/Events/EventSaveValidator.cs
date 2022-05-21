@@ -20,7 +20,7 @@ namespace Eventify.Core.Events
 			messages.AddIfInvalid(ValidationCheck.Create(!string.IsNullOrWhiteSpace(entity.Address), "Koht on kohustuslik", null, ValidationMessageSeverity.Error));
 			messages.AddIfInvalid(ValidationCheck.Create(!string.IsNullOrWhiteSpace(entity.StartDate), "Toimumisaeg on kohustuslik", null, ValidationMessageSeverity.Error));
 
-			if (string.IsNullOrWhiteSpace(entity.StartDate))
+			if (!string.IsNullOrWhiteSpace(entity.StartDate))
 			{
 				messages.AddIfInvalid(ValidationCheck.Create(DateTime.TryParse(entity.StartDate, out _), "Toimumisaeg ei ole sisestatud korrektses formaadis", null, ValidationMessageSeverity.Error));
 			}

@@ -19,8 +19,12 @@
                             <td>{{ event.address }}</td>
                         </tr>
                         <tr>
+                            <th>Lisainfo:</th>
+                            <td>{{ event.notes || '&#8211;' }}</td>
+                        </tr>
+                        <tr>
                             <th>Osavõtjad:</th>
-                            <td *ngIf="hasAttendees">
+                            <td *ngIf="hasAttendees" class="pl-0">
                                 <attendees-grid
                                     [attendees]="event.attendees"
                                     (onDeleted)="removeAttendee($event)"

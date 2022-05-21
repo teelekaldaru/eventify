@@ -1,7 +1,7 @@
 import { Event } from 'src/app/models/events/event.model';
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../../services/events/event.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { first, map } from 'rxjs/operators';
 import { AttendeeGridRow } from '../../../models/attendees/attendee-grid-view.model';
 import { AlertService } from 'src/app/services/alert.service';
@@ -18,7 +18,6 @@ export class EventDetailsComponent implements OnInit {
 
     constructor(
         private readonly route: ActivatedRoute,
-        private readonly router: Router,
         private readonly eventService: EventService,
         private readonly alertService: AlertService
     ) {}

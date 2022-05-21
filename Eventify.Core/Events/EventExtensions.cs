@@ -27,7 +27,9 @@ namespace Eventify.Core.Events
         public static EventDetailsViewModel ToViewModel(this Event entity)
         {
             var viewModel = MapperWrapper.Mapper.Map<EventDetailsViewModel>(entity);
-            viewModel.Attendees = entity.EventAttendees.Select(x => x.ToGridViewModel());
+            viewModel.Attendees = entity.EventAttendees
+                .OrderBy(x => x.CreatedDate)
+                .Select(x => x.ToGridViewModel());
             return viewModel;
         }
 
