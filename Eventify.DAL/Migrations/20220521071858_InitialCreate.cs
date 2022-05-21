@@ -13,6 +13,7 @@ namespace Eventify.DAL.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
+                    LastName = table.Column<string>(type: "text", nullable: false),
                     Code = table.Column<string>(type: "text", nullable: false),
                     AttendeeType = table.Column<int>(type: "integer", nullable: false)
                 },

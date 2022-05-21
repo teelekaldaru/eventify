@@ -1,5 +1,11 @@
 <sub-navbar [title]="'Osavõtja info'"></sub-navbar>
 
-<div class="row justify-content-center">
-    <div class="col-md-6"></div>
+<div *ngIf="!!attendee" class="row justify-content-center">
+    <div class="col-md-6">
+        <attendee-create-edit
+            [attendee]="attendee"
+            [eventId]="attendee.eventId"
+            (onSave)="back()"
+        ></attendee-create-edit>
+    </div>
 </div>

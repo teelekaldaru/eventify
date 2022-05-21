@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AttendeeGridRow } from 'src/app/models/attendees/attendee-grid-view.model';
 import { AttendeeSave } from '../../models/attendees/attendee-save.model';
 import { Attendee } from '../../models/attendees/attendee.model';
 import { CommonEndpointService } from '../common-endpoint.service';
@@ -14,7 +15,7 @@ export class AttendeeService {
     }
 
     saveAttendee(data: AttendeeSave) {
-        return this.endpoint.post<Attendee>(`${this.relativeUrl}`, data);
+        return this.endpoint.post<AttendeeGridRow>(`${this.relativeUrl}`, data);
     }
 
     deleteAttendee(id: string) {

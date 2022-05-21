@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Eventify.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220520062257_InitialCreate")]
+    [Migration("20220521071858_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,6 +31,10 @@ namespace Eventify.DAL.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
 

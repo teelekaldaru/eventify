@@ -1,9 +1,11 @@
 export class Attendee {
     id: string;
-    firstName: string;
-    lastName: string;
-    name: string;
+    eventId: string;
     code: string;
+    name: string;
+    lastName: string;
+    notes: string;
+    paymentMethod: string;
     attendeeType: AttendeeType;
 }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using Eventify.Common.Classes.Attendees;
 using Eventify.Common.Utils.Database;
 
@@ -13,9 +14,12 @@ namespace Eventify.Domain
 	    [Key]
 	    public Guid Id { get; set; }
 
-	    public string Name { get; set; }
+        public string Name { get; set; }
 
-	    public string Code { get; set; }
+        [AllowNull]
+        public string LastName { get; set; }
+
+        public string Code { get; set; }
 
         public AttendeeType AttendeeType { get; set; }
 

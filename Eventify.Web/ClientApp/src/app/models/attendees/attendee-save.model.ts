@@ -3,11 +3,11 @@ import { AttendeeType } from "./attendee.model";
 export class AttendeeSave {
     id?: string;
     name?: string;
-    firstName?: string;
     lastName?: string;
-    personalCode?: string;
-    registerCode?: string;
+    code?: string;
     paymentMethod?: string;
+    participants?: number;
     notes?: string;
+    eventId: string;
     attendeeType: AttendeeType;
 }

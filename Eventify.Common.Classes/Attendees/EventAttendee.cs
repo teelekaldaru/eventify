@@ -19,8 +19,8 @@ namespace Eventify.Common.Classes.Attendees
 
 		public string? Notes { get; set; }
 
-		public virtual Event Event { get; set; }
+		public Event Event { get; set; }
 
-		public virtual Attendee Attendee { get; set; }
+		public Attendee Attendee { get; set; }
 	}
 }

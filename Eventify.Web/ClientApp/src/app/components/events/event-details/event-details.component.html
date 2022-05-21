@@ -38,6 +38,7 @@
     <div *ngIf="!event.isPast" class="col-md-6">
         <h4 class="mb-5">Osavõtjate lisamine</h4>
         <attendee-create-edit
+            [eventId]="event.id"
             [showButtons]="true"
             (onSave)="addAttendee($event)"
         ></attendee-create-edit>

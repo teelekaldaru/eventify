@@ -4,6 +4,8 @@
 	{
 		public string AttendeeName { get; set; }
 
+		public string AttendeeLastName { get; set; }
+
 		public string AttendeeCode { get; set; }
 		
 		public string PaymentMethod { get; set; }

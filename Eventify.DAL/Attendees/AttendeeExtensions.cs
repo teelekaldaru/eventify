@@ -43,7 +43,12 @@ namespace Eventify.DAL.Attendees
 		        entity.Attendee.Name = updateSet.AttendeeName;
 	        }
 
-            if (!string.IsNullOrWhiteSpace(updateSet.PaymentMethod))
+            if (!string.IsNullOrWhiteSpace(updateSet.AttendeeLastName))
+            {
+                entity.Attendee.LastName = updateSet.AttendeeLastName;
+            }
+
+			if (!string.IsNullOrWhiteSpace(updateSet.PaymentMethod))
 	        {
 		        entity.PaymentMethod = updateSet.PaymentMethod;
 	        }

@@ -5,6 +5,7 @@ import { DefaultUrlSerializer, RouterModule, UrlSerializer, UrlTree } from "@ang
 import { Utilities } from "./services/utilities";
 import { EventDetailsComponent } from './components/events/event-details/event-details.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AttendeeDetailsComponent } from './components/attendee-details/attendee-details.component';
 
 @Injectable()
 export class LowerCaseUrlSerializer extends DefaultUrlSerializer {
@@ -43,8 +44,14 @@ const routes = [
             {
                 path: ':id',
                 component: EventDetailsComponent,
-                data: { title: 'Event details' },
+                data: { title: 'Event' },
                 pageUniqueId: 'event-details',
+            },
+            {
+                path: 'attendee/:id',
+                component: AttendeeDetailsComponent,
+                data: { title: 'Attendee' },
+                pageUniqueId: 'attendee-details'
             },
         ],
     },

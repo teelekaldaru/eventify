@@ -21,17 +21,12 @@ namespace Eventify.Core.Events
 
         public static EventGridRowViewModel ToGridRowViewModel(this Event entity)
         {
-            var row = MapperWrapper.Mapper.Map<EventGridRowViewModel>(entity);
-            row.IsPast = entity.StartDate < DateTime.Now;
-            row.StartDate = entity.StartDate.ToString("dd.MM.yyyy HH:mm");
-            return row;
+            return MapperWrapper.Mapper.Map<EventGridRowViewModel>(entity);
         }
 
         public static EventDetailsViewModel ToViewModel(this Event entity)
         {
             var viewModel = MapperWrapper.Mapper.Map<EventDetailsViewModel>(entity);
-            viewModel.IsPast = entity.StartDate < DateTime.Now;
-            viewModel.StartDate = entity.StartDate.ToString("dd.MM.yyyy HH:mm");
             viewModel.Attendees = entity.EventAttendees.Select(x => x.ToGridViewModel());
             return viewModel;
         }

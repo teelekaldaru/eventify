@@ -5,7 +5,10 @@ import { AttendeeSave } from '../../models/attendees/attendee-save.model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { first, map } from 'rxjs/operators';
 import { PaymentMethod } from '../../models/finances/payment-method.model';
-import { Attendee, AttendeeType } from '../../models/attendees/attendee.model';
+import { AttendeeType } from '../../models/attendees/attendee.model';
+import { AttendeeGridRow } from 'src/app/models/attendees/attendee-grid-view.model';
+import { SimpleMessage } from 'src/app/models/system/request-result';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
     selector: 'attendee-create-edit',
@@ -14,25 +17,25 @@ import { Attendee, AttendeeType } from '../../models/attendees/attendee.model';
 })
 export class AttendeeCreateEditComponent implements OnInit {
 
-    @Input() attendeeId?: string;
+    @Input() eventId: string;
+    @Input() attendee?: AttendeeSave;
     @Input() showButtons: boolean;
-    @Output() onSave: EventEmitter<Attendee> = new EventEmitter();
 
-    attendee: AttendeeSave;
+    @Output() onSave: EventEmitter<AttendeeGridRow> = new EventEmitter();
+
     attendeeType: AttendeeType = AttendeeType.Person;
     paymentMethods: PaymentMethod[] = [];
 
     constructor(
         private readonly router: Router,
         private readonly attendeeService: AttendeeService,
-        private readonly financeService: FinanceService
+        private readonly financeService: FinanceService,
+        private readonly alertService: AlertService
     ) {}
 
     ngOnInit(): void {
         this.getPaymentMethods();
-        if (!!this.attendeeId) {
-            this.getAttendee();
-        } else {
+        if (!this.attendee) {
             this.resetForm();
         }
     }
@@ -51,7 +54,7 @@ export class AttendeeCreateEditComponent implements OnInit {
                     if (response && response.success) {
                         this.onSave.emit(response.data);
                     } else {
-                        console.log(response.messages);
+                        this.alertService.responseErrors(response.messages);
                     }
                 })
             )
@@ -59,29 +62,14 @@ export class AttendeeCreateEditComponent implements OnInit {
     }
 
     back(): void {
-        this.router.navigateByUrl(`events`);
+        this.router.navigateByUrl(`event/${this.eventId}`);
     }
 
     private resetForm(): void {
         this.attendee = {
-            attendeeType: this.attendeeType
+            attendeeType: this.attendeeType,
+            eventId: this.eventId
         };
-    }
-
-    private getAttendee(): void {
-        this.attendeeService
-            .getAttendee(this.attendeeId)
-            .pipe(
-                first(),
-                map((response) => {
-                    if (response && response.success) {
-                        this.attendee = response.data;
-                    } else {
-                        console.log(response.messages);
-                    }
-                })
-            )
-            .subscribe();
     }
 
     private getPaymentMethods(): void {
@@ -92,8 +80,6 @@ export class AttendeeCreateEditComponent implements OnInit {
                 map((response) => {
                     if (response && response.success) {
                         this.paymentMethods = response.data;
-                    } else {
-                        console.log(response.messages);
                     }
                 })
             )

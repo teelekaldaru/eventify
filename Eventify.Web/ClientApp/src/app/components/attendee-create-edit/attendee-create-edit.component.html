@@ -56,7 +56,7 @@
                 ></textarea>
             </div>
 
-            <div class="form-group mt-5">
+            <div class="d-flex justify-content-end mt-4 mb-5">
                 <button
                     type="button"
                     class="btn btn-outline-primary"
@@ -64,8 +64,8 @@
                 >
                     Tagasi
                 </button>
-                <button type="submit" class="btn btn-primary" (click)="save()">
-                    Lisa
+                <button type="submit" class="btn btn-primary btn-space-left" (click)="save()">
+                    Salvesta
                 </button>
             </div>
         </form>
@@ -76,7 +76,7 @@
     <div class="form-group mb-2">
         <label for="firstName">Eesnimi:</label>
         <input
-            [(ngModel)]="attendee.firstName"
+            [(ngModel)]="attendee.name"
             type="text"
             class="form-control"
             id="firstName"
@@ -96,7 +96,7 @@
     <div class="form-group mb-2">
         <label for="personalCode">Isikukood:</label>
         <input
-            [(ngModel)]="attendee.personalCode"
+            [(ngModel)]="attendee.code"
             type="text"
             class="form-control"
             id="personalCode"
@@ -119,11 +119,21 @@
     <div class="form-group mb-2">
         <label for="registerCode">Registrikood:</label>
         <input
-            [(ngModel)]="attendee.registerCode"
+            [(ngModel)]="attendee.code"
             type="text"
             class="form-control"
             id="registerCode"
             name="registerCode"
+        />
+    </div>
+    <div class="form-group mb-2">
+        <label for="participants">Osalejate arv:</label>
+        <input
+            [(ngModel)]="attendee.participants"
+            type="number"
+            class="form-control"
+            id="participants"
+            name="participants"
         />
     </div>
 </ng-template>

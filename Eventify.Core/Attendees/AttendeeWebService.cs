@@ -10,7 +10,7 @@ namespace Eventify.Core.Attendees
 {
 	public interface IAttendeeWebService
     {
-        Task<RequestResult<AttendeeViewModel>> GetEventAttendee(Guid attendeeId);
+        Task<RequestResult<AttendeeViewModel>> GetEventAttendee(Guid eventAttendeeId);
 
         Task<RequestResult<AttendeeGridViewModel>> SaveAttendee(AttendeeSaveModel saveModel);
 
@@ -31,11 +31,11 @@ namespace Eventify.Core.Attendees
 	        _attendeeSaveValidator = attendeeSaveValidator;
         }
 
-        public async Task<RequestResult<AttendeeViewModel>> GetEventAttendee(Guid attendeeId)
+        public async Task<RequestResult<AttendeeViewModel>> GetEventAttendee(Guid eventAttendeeId)
         {
             try
             {
-                var attendee = await _attendeeRepository.GetEventAttendeeById(attendeeId);
+                var attendee = await _attendeeRepository.GetEventAttendeeById(eventAttendeeId);
                 var result = attendee.ToViewModel();
                 return RequestResult<AttendeeViewModel>.CreateSuccess(result);
             }

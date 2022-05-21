@@ -19,6 +19,7 @@ import { AttendeeCreateEditComponent } from './components/attendee-create-edit/a
 import { FinanceService } from './services/finances/finance.service';
 import { SubNavbarComponent } from './components/sub-navbar/sub-navbar.component';
 import { AttendeeDetailsComponent } from './components/attendee-details/attendee-details.component';
+import { AlertModule } from './modules/alert.module';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { AttendeeDetailsComponent } from './components/attendee-details/attendee
         HttpClientModule,
         FormsModule,
         AppRoutingModule,
-        CommonModule
+        CommonModule,
+        AlertModule
     ],
     providers: [
         EventService,

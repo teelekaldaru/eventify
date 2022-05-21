@@ -34,7 +34,7 @@ namespace Eventify.Core.Events
 
         public bool IsPast { get; set; }
 
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
 
         public IEnumerable<AttendeeGridViewModel> Attendees { get; set; }
     }

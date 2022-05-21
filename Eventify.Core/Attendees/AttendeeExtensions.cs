@@ -1,6 +1,5 @@
 ﻿using Eventify.Common.Classes.Attendees;
 using Eventify.Common.Classes.AutoMapper;
-using Eventify.Common.Utils.Exceptions;
 using Eventify.DAL.Attendees;
 
 namespace Eventify.Core.Attendees
@@ -14,19 +13,14 @@ namespace Eventify.Core.Attendees
 
         public static AttendeeViewModel ToViewModel(this EventAttendee eventAttendee)
         {
-	        var attendeeType = eventAttendee.Attendee.AttendeeType;
-
-			return attendeeType switch
-			{
-				AttendeeType.Person => eventAttendee.ToPersonViewModel(),
-				AttendeeType.Company => eventAttendee.ToCompanyViewModel(),
-				_ => throw new SimpleException($"Invalid attendee type: {attendeeType}")
-			};
-		}
+            return MapperWrapper.Mapper.Map<AttendeeViewModel>(eventAttendee);
+        }
 
         public static EventAttendee ToEventAttendee(this AttendeeSaveModel saveModel)
         {
-	        return MapperWrapper.Mapper.Map<EventAttendee>(saveModel);
+	        var eventAttendee = MapperWrapper.Mapper.Map<EventAttendee>(saveModel);
+            eventAttendee.Attendee = saveModel.ToAttendee();
+            return eventAttendee;
         }
 
         public static EventAttendeeUpdateSet ToUpdateSet(this AttendeeSaveModel saveModel)
@@ -34,14 +28,9 @@ namespace Eventify.Core.Attendees
 	        return MapperWrapper.Mapper.Map<EventAttendeeUpdateSet>(saveModel);
         }
 
-        private static AttendeePersonViewModel ToPersonViewModel(this EventAttendee eventAttendee)
+        private static Attendee ToAttendee(this AttendeeSaveModel saveModel)
         {
-	        return MapperWrapper.Mapper.Map<AttendeePersonViewModel>(eventAttendee);
-        }
-
-        private static AttendeeCompanyViewModel ToCompanyViewModel(this EventAttendee eventAttendee)
-        {
-	        return MapperWrapper.Mapper.Map<AttendeeCompanyViewModel>(eventAttendee);
+	        return MapperWrapper.Mapper.Map<Attendee>(saveModel);
         }
     }
 }

@@ -1,17 +1,13 @@
 <table *ngIf="attendees" class="table table-borderless">
     <tbody>
         <tr *ngFor="let attendee of attendees">
-            <td>{{ attendee.name }}</td>
+            <td>{{ attendee.fullName }}</td>
             <td>{{ attendee.code }}</td>
             <td>
-                <button class="btn btn-link" (click)="openDetails(attendee.id)">
-                    Vaata
-                </button>
+                <a class="link" (click)="openDetails(attendee.id)">Vaata</a>
             </td>
             <td>
-                <button class="btn btn-link" (click)="delete(attendee.id)">
-                    Kustuta
-                </button>
+                <a class="link" (click)="delete(attendee.id)">Kustuta</a>
             </td>
         </tr>
     </tbody>
