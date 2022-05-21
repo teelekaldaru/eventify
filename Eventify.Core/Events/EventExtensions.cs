@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Eventify.Common.Classes.AutoMapper;
 using Eventify.Common.Classes.Events;

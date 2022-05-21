@@ -18,7 +18,7 @@ namespace Eventify.Core.Events
         Task<RequestResult> DeleteEvent(Guid eventId);
     }
 
-    internal class EventWebService : BaseWebService, IEventWebService
+    public class EventWebService : BaseWebService, IEventWebService
     {
         private readonly IEventRepository _eventRepository;
         private readonly IEventSaveValidator _eventSaveValidator;
@@ -73,8 +73,7 @@ namespace Eventify.Core.Events
 	            if (!validationResult.IsValid)
 	            {
 		            return RequestResult<EventDetailsViewModel>.CreateValidation(validationResult);
-
-	            }
+                }
 
                 var eventToSave = saveModel.ToEvent();
                 var savedEvent = !saveModel.Id.HasValue

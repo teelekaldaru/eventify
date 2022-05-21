@@ -5,7 +5,7 @@ using Eventify.Common.Utils.Validations;
 
 namespace Eventify.Core.Events
 {
-	internal interface IEventSaveValidator
+	public interface IEventSaveValidator
 	{
 		Task<ValidationMessages> Validate(EventSaveModel entity);
 	}
