@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AttendeeGridRow } from '../../models/attendees/attendee-grid-view.model';
 import { Router } from '@angular/router';
 import { first, map } from 'rxjs/operators';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
     selector: 'attendees-grid',
@@ -16,7 +17,8 @@ export class AttendeesGridComponent implements OnInit {
 
     constructor(
         private readonly router: Router,
-        private readonly attendeeService: AttendeeService
+        private readonly attendeeService: AttendeeService,
+        private readonly alertService: AlertService
     ) {}
 
     ngOnInit(): void {}
@@ -27,17 +29,17 @@ export class AttendeesGridComponent implements OnInit {
 
     delete(id: string): void {
         this.attendeeService
-        .deleteAttendee(id)
-            .pipe(
-                first(),
-                map((response) => {
-                    if (response && response.success) {
-                        this.onDeleted.emit(id);
-                    } else {
-                        console.log(response.messages);
-                    }
-                })
-            )
-            .subscribe();
+            .deleteAttendee(id)
+                .pipe(
+                    first(),
+                    map((response) => {
+                        if (response && response.success) {
+                            this.onDeleted.emit(id);
+                        } else {
+                            this.alertService.responseErrors(response.messages);
+                        }
+                    })
+                )
+                .subscribe();
     }
 }

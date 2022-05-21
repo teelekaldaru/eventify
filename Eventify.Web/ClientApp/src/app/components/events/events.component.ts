@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { first, map } from 'rxjs/operators';
 import { EventGridRow, EventGridView } from 'src/app/models/events/event-grid-view.model';
 import { EventService } from 'src/app/services/events/event.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
     selector: 'events',
@@ -14,6 +15,7 @@ export class EventsComponent implements OnInit {
 
     constructor(
         private readonly eventService: EventService,
+        private readonly alertService: AlertService,
         private readonly router: Router
     ) {}
 
@@ -39,7 +41,7 @@ export class EventsComponent implements OnInit {
                 if (response && response.success) {
                     this.events = response.data;
                 } else {
-                    console.log(response.messages);
+                    this.alertService.responseErrors(response.messages);
                 }
             })
         ).subscribe();

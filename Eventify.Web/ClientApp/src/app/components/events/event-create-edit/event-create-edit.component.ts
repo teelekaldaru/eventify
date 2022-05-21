@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { first, map } from 'rxjs/operators';
 import { EventSave } from 'src/app/models/events/event-save.model';
+import { AlertService } from 'src/app/services/alert.service';
 import { EventService } from 'src/app/services/events/event.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class EventCreateEditComponent implements OnInit {
 
     constructor(
         private readonly eventService: EventService,
-        private readonly router: Router
+        private readonly router: Router,
+        private readonly alertService: AlertService
     ) {}
 
     ngOnInit(): void {
@@ -29,17 +31,17 @@ export class EventCreateEditComponent implements OnInit {
                 first(),
                 map((response) => {
                     if (response && response.success) {
-                        this.back();
+                        this.openDetails(response.data.id);
                     } else {
-                        console.log(response.messages);
+                        this.alertService.responseErrors(response.messages);
                     }
                 })
             )
             .subscribe();
     }
 
-    back(): void {
-        this.router.navigateByUrl("/");
+    openDetails(eventId: string): void {
+        this.router.navigateByUrl(`event/${eventId}`);
     }
 
     get minDate(): string { return new Date().toISOString().slice(0, 16); }

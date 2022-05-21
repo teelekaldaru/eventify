@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { first, map } from 'rxjs/operators';
 import { EventGridRow } from 'src/app/models/events/event-grid-view.model';
+import { AlertService } from 'src/app/services/alert.service';
 import { EventService } from 'src/app/services/events/event.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class EventsGridComponent implements OnInit {
 
     constructor(
         private readonly eventService: EventService,
+        private readonly alertService: AlertService,
         private readonly router: Router
     ) {}
 
@@ -36,7 +38,7 @@ export class EventsGridComponent implements OnInit {
                     if (response && response.success) {
                         this.onDeleted.emit(id);
                     } else {
-                        console.log(response.messages);
+                        this.alertService.responseErrors(response.messages);
                     }
                 })
             )

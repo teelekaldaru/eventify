@@ -4,17 +4,16 @@ import { filter } from "rxjs/operators";
 import { Alert, AlertType } from "../models/system/alert.model";
 import { SimpleMessage } from "../models/system/request-result";
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class AlertService {
+
     private subject = new Subject<Alert>();
     private defaultId = 'default-alert';
 
-    // enable subscribing to alerts observable
     onAlert(id = this.defaultId): Observable<Alert> {
         return this.subject.asObservable().pipe(filter(x => x && x.id === id));
     }
 
-    // convenience methods
     success(message: string, options?: any) {
         this.alert(new Alert({ ...options, type: AlertType.Success, message }));
     }
@@ -24,7 +23,7 @@ export class AlertService {
     }
 
     responseErrors(messages: SimpleMessage[], options?: any) {
-        const message = messages[0].header;
+        const message = messages.map(x => x.header).join("<br>");
         this.alert(new Alert({ ...options, type: AlertType.Error, message }));
     }
 
@@ -36,13 +35,11 @@ export class AlertService {
         this.alert(new Alert({ ...options, type: AlertType.Warning, message }));
     }
 
-    // main alert method    
     alert(alert: Alert) {
         alert.id = alert.id || this.defaultId;
         this.subject.next(alert);
     }
 
-    // clear alerts
     clear(id = this.defaultId) {
         this.subject.next(new Alert({ id }));
     }

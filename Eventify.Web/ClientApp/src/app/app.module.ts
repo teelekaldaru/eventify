@@ -20,6 +20,8 @@ import { FinanceService } from './services/finances/finance.service';
 import { SubNavbarComponent } from './components/sub-navbar/sub-navbar.component';
 import { AttendeeDetailsComponent } from './components/attendee-details/attendee-details.component';
 import { AlertModule } from './modules/alert.module';
+import { AlertService } from './services/alert.service';
+import { BackButtonDirective } from './directives/back-button.directive';
 
 @NgModule({
     declarations: [
@@ -31,7 +33,8 @@ import { AlertModule } from './modules/alert.module';
         AttendeesGridComponent,
         AttendeeCreateEditComponent,
         SubNavbarComponent,
-        AttendeeDetailsComponent
+        AttendeeDetailsComponent,
+        BackButtonDirective
     ],
     imports: [
         BrowserModule,
@@ -46,7 +49,8 @@ import { AlertModule } from './modules/alert.module';
         AttendeeService,
         CommonEndpointService,
         ConfigurationService,
-        FinanceService
+        FinanceService,
+        AlertService
     ],
     bootstrap: [AppComponent],
 })
