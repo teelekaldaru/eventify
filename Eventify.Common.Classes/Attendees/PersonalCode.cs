@@ -1,17 +1,17 @@
 ﻿using System.Linq;
 
-namespace Eventify.Common.Classes
+namespace Eventify.Common.Classes.Attendees
 {
-	public interface IPersonalCode
-	{
-		string Code { get; }
+    public interface IPersonalCode
+    {
+        string Code { get; }
 
-		bool IsValid();
-	}
+        bool IsValid();
+    }
 
     public class PersonalCode : IPersonalCode
     {
-	    public string Code { get; }
+        public string Code { get; }
 
         public PersonalCode(string code)
         {

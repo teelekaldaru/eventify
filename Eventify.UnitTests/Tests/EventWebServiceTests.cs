@@ -1,3 +1,4 @@
+using Eventify.Common.Classes;
 using Eventify.Common.Classes.Attendees;
 using Eventify.Common.Classes.Events;
 using Eventify.Common.Utils.Exceptions;
@@ -40,9 +41,12 @@ namespace Eventify.UnitTests.Tests
 
             _eventWebService = new EventWebService(_logger, _eventRepository, _eventSaveValidator);
 
+            var futureEventId = new Guid();
+            var pastEventId = new Guid();
+
             _futureEvent = new Event
             {
-                Id = Guid.Parse("b26dedff-c7e0-4847-8d7d-dbcf50d09546"),
+                Id = futureEventId,
                 Address = "UnitTest1",
                 Name = "UnitTest1",
                 Notes = "UnitTest1",
@@ -52,7 +56,7 @@ namespace Eventify.UnitTests.Tests
 
             _futureEventGridRow = new EventGridRowViewModel
             {
-                Id = Guid.Parse("b26dedff-c7e0-4847-8d7d-dbcf50d09546"),
+                Id = futureEventId,
                 Name = "UnitTest1",
                 IsPast = false,
                 StartDate = "01.01.2099 00:00"
@@ -60,7 +64,7 @@ namespace Eventify.UnitTests.Tests
 
             _futureEventDetails = new EventDetailsViewModel
             {
-                Id = Guid.Parse("b26dedff-c7e0-4847-8d7d-dbcf50d09546"),
+                Id = futureEventId,
                 Name = "UnitTest1",
                 Address = "UnitTest1",
                 Notes = "UnitTest1",
@@ -71,7 +75,7 @@ namespace Eventify.UnitTests.Tests
 
             _pastEvent = new Event
             {
-                Id = Guid.Parse("1a298e25-1c40-449d-bb48-d0aeec0ddcf3"),
+                Id = pastEventId,
                 Address = "UnitTest2",
                 Name = "UnitTest2",
                 Notes = "UnitTest2",
@@ -80,7 +84,7 @@ namespace Eventify.UnitTests.Tests
 
             _pastEventGridRow = new EventGridRowViewModel
             {
-                Id = Guid.Parse("1a298e25-1c40-449d-bb48-d0aeec0ddcf3"),
+                Id = pastEventId,
                 Name = "UnitTest2",
                 IsPast = true,
                 StartDate = "01.01.1999 00:00"
@@ -127,10 +131,11 @@ namespace Eventify.UnitTests.Tests
             _eventRepository.GetEventById(invalidId).ReturnsNull();
 
             var result = await _eventWebService.GetEventDetails(invalidId);
+            var message = $"Event with id {invalidId} was not found";
 
             Assert.IsFalse(result.Success);
             Assert.IsNull(result.Data);
-            Assert.That(result.Messages, Has.Exactly(1).Matches<SimpleMessage>(x => x.Header == $"Event with id {invalidId} was not found"));
+            Assert.That(result.Messages, Has.Exactly(1).Matches<SimpleMessage>(x => x.Header == message));
         }
 
         [Test]
@@ -138,7 +143,6 @@ namespace Eventify.UnitTests.Tests
         {
             var saveModel = new EventSaveModel
             {
-                Id = _futureEvent.Id,
                 Name = _futureEvent.Name,
                 Address = _futureEvent.Address,
                 StartDate = "2099-01-01T00:00:00",
@@ -196,9 +200,9 @@ namespace Eventify.UnitTests.Tests
             var messages = result.GetWebMessages().ToList();
             var expectedMessages = new[]
             {
-                "Nimi on kohustuslik",
-                "Koht on kohustuslik",
-                "Toimumisaeg on kohustuslik"
+                ErrorMessages.EventNameRequired,
+                ErrorMessages.EventAddressRequired,
+                ErrorMessages.EventStartTimeRequired
             };
 
             Assert.IsNotEmpty(messages);

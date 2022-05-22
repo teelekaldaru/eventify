@@ -1,4 +1,5 @@
-﻿using Eventify.Common.Classes.Attendees;
+﻿using Eventify.Common.Classes;
+using Eventify.Common.Classes.Attendees;
 using Eventify.Common.Utils.Exceptions;
 using Eventify.Common.Utils.Logger;
 using Eventify.Common.Utils.Messages;
@@ -118,10 +119,11 @@ namespace Eventify.UnitTests.Tests
             _attendeeRepository.GetEventAttendeeById(invalidId).ReturnsNull();
 
             var result = await _attendeeWebService.GetEventAttendee(invalidId);
+            var message = $"Event attendee with id {invalidId} was not found";
 
             Assert.IsFalse(result.Success);
             Assert.IsNull(result.Data);
-            Assert.That(result.Messages, Has.Exactly(1).Matches<SimpleMessage>(x => x.Header == $"Event attendee with id {invalidId} was not found"));
+            Assert.That(result.Messages, Has.Exactly(1).Matches<SimpleMessage>(x => x.Header == message));
         }
 
         [Test]
@@ -190,7 +192,7 @@ namespace Eventify.UnitTests.Tests
 
             Assert.IsFalse(result.IsValid);
             Assert.IsNotEmpty(messages);
-            Assert.That(messages, Has.Exactly(1).Matches<SimpleMessage>(x => x.Header == "Osavõtja tüüp ei ole täpsustatud"));
+            Assert.That(messages, Has.Exactly(1).Matches<SimpleMessage>(x => x.Header == ErrorMessages.AttendeeTypeInvalid));
         }
 
 
@@ -212,10 +214,10 @@ namespace Eventify.UnitTests.Tests
             var messages = result.GetWebMessages().ToList();
             var expectedMessages = new[]
             {
-                "Eesnimi on kohustuslik",
-                "Perenimi on kohustuslik",
-                "Isikukood ei ole korrektne",
-                "Maksmisviis on kohustuslik"
+                ErrorMessages.AttendeeFirstNameRequired,
+                ErrorMessages.AttendeeLastNameRequired,
+                ErrorMessages.AttendeePersonalCodeInvalid,
+                ErrorMessages.AttendeePaymentMethodRequired
             };
 
             Assert.IsFalse(result.IsValid);
@@ -241,10 +243,10 @@ namespace Eventify.UnitTests.Tests
             var messages = result.GetWebMessages().ToList();
             var expectedMessages = new[]
             {
-                "Nimi on kohustuslik",
-                "Registrikood on kohustuslik",
-                "Osalejate arv peab olema vähemalt 1",
-                "Maksmisviis on kohustuslik"
+                ErrorMessages.AttendeeNameRequired,
+                ErrorMessages.AttendeeRegisterCodeRequired,
+                ErrorMessages.AttendeeParticipantsInvalid,
+                ErrorMessages.AttendeePaymentMethodRequired
             };
 
             Assert.IsFalse(result.IsValid);
