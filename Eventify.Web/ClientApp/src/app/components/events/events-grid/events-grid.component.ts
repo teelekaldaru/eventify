@@ -2,8 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { first, map } from 'rxjs/operators';
 import { EventGridRow } from 'src/app/models/events/event-grid-view.model';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/services/alerts/alert.service';
 import { EventService } from 'src/app/services/events/event.service';
+import { ModalService } from 'src/app/services/modal.service';
+import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
     selector: 'events-grid',
@@ -20,6 +22,7 @@ export class EventsGridComponent implements OnInit {
     constructor(
         private readonly eventService: EventService,
         private readonly alertService: AlertService,
+        private readonly modalService: ModalService,
         private readonly router: Router
     ) {}
 
@@ -29,7 +32,17 @@ export class EventsGridComponent implements OnInit {
         this.router.navigateByUrl(`event/${id}`);
     }
 
-    deleteEvent(id: string): void {
+    tryDelete(id: string): void {
+        const initialState = {
+            content: "Kas oled kindel, et soovid selle ürituse kustutada?",
+            okLabel: "Jah, kustuta",
+            cancelLabel: "Ei, tühista",
+            onConfirm: () => this.delete(id)
+        };
+        this.modalService.openModal(ConfirmationDialogComponent, initialState);
+    }
+
+    private delete(id: string): void {
         this.eventService
             .deleteEvent(id)
             .pipe(

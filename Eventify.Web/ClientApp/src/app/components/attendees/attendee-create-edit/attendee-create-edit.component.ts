@@ -1,12 +1,12 @@
-import { FinanceService } from './../../services/finances/finance.service';
-import { AttendeeService } from './../../services/attendees/attendee.service';
-import { AttendeeSave } from '../../models/attendees/attendee-save.model';
+import { FinanceService } from '../../../services/finances/finance.service';
+import { AttendeeService } from '../../../services/attendees/attendee.service';
+import { AttendeeSave } from '../../../models/attendees/attendee-save.model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { first, map } from 'rxjs/operators';
-import { PaymentMethod } from '../../models/finances/payment-method.model';
-import { AttendeeType } from '../../models/attendees/attendee.model';
+import { PaymentMethod } from '../../../models/finances/payment-method.model';
+import { AttendeeType } from '../../../models/attendees/attendee.model';
 import { AttendeeGridRow } from 'src/app/models/attendees/attendee-grid-view.model';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/services/alerts/alert.service';
 
 @Component({
     selector: 'attendee-create-edit',

@@ -14,14 +14,16 @@ import { EventCreateEditComponent } from './components/events/event-create-edit/
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
-import { AttendeesGridComponent } from './components/attendees-grid/attendees-grid.component';
-import { AttendeeCreateEditComponent } from './components/attendee-create-edit/attendee-create-edit.component';
+import { AttendeesGridComponent } from './components/attendees/attendees-grid/attendees-grid.component';
+import { AttendeeCreateEditComponent } from './components/attendees/attendee-create-edit/attendee-create-edit.component';
 import { FinanceService } from './services/finances/finance.service';
 import { SubNavbarComponent } from './components/sub-navbar/sub-navbar.component';
-import { AttendeeDetailsComponent } from './components/attendee-details/attendee-details.component';
-import { AlertModule } from './modules/alert.module';
-import { AlertService } from './services/alert.service';
+import { AttendeeDetailsComponent } from './components/attendees/attendee-details/attendee-details.component';
+import { AlertModule } from './services/alerts/alert.module';
+import { AlertService } from './services/alerts/alert.service';
 import { BackButtonDirective } from './directives/back-button.directive';
+import { ModalService } from './services/modal.service';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
     declarations: [
@@ -42,7 +44,8 @@ import { BackButtonDirective } from './directives/back-button.directive';
         FormsModule,
         AppRoutingModule,
         CommonModule,
-        AlertModule
+        AlertModule,
+        ModalModule.forRoot()
     ],
     providers: [
         EventService,
@@ -50,7 +53,8 @@ import { BackButtonDirective } from './directives/back-button.directive';
         CommonEndpointService,
         ConfigurationService,
         FinanceService,
-        AlertService
+        AlertService,
+        ModalService
     ],
     bootstrap: [AppComponent],
 })

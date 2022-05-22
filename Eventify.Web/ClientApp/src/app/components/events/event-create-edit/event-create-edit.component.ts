@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { first, map } from 'rxjs/operators';
 import { EventSave } from 'src/app/models/events/event-save.model';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/services/alerts/alert.service';
 import { EventService } from 'src/app/services/events/event.service';
 
 @Component({

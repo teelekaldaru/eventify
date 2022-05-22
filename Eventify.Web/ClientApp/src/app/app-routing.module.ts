@@ -5,7 +5,7 @@ import { DefaultUrlSerializer, RouterModule, UrlSerializer, UrlTree } from "@ang
 import { Utilities } from "./services/utilities";
 import { EventDetailsComponent } from './components/events/event-details/event-details.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { AttendeeDetailsComponent } from './components/attendee-details/attendee-details.component';
+import { AttendeeDetailsComponent } from './components/attendees/attendee-details/attendee-details.component';
 
 @Injectable()
 export class LowerCaseUrlSerializer extends DefaultUrlSerializer {

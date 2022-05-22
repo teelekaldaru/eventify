@@ -1,9 +1,11 @@
-import { AttendeeService } from './../../services/attendees/attendee.service';
+import { AttendeeService } from '../../../services/attendees/attendee.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AttendeeGridRow } from '../../models/attendees/attendee-grid-view.model';
+import { AttendeeGridRow } from '../../../models/attendees/attendee-grid-view.model';
 import { Router } from '@angular/router';
 import { first, map } from 'rxjs/operators';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/services/alerts/alert.service';
+import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
+import { ModalService } from 'src/app/services/modal.service';
 
 @Component({
     selector: 'attendees-grid',
@@ -18,7 +20,8 @@ export class AttendeesGridComponent implements OnInit {
     constructor(
         private readonly router: Router,
         private readonly attendeeService: AttendeeService,
-        private readonly alertService: AlertService
+        private readonly alertService: AlertService,
+        private readonly modalService: ModalService
     ) {}
 
     ngOnInit(): void {}
@@ -27,7 +30,17 @@ export class AttendeesGridComponent implements OnInit {
         this.router.navigateByUrl(`event/attendee/${id}`);
     }
 
-    delete(id: string): void {
+    tryDelete(id: string): void {
+        const initialState = {
+            content: "Kas oled kindel, et soovid osavõtja ürituselt eemaldada?",
+            okLabel: "Jah, eemalda",
+            cancelLabel: "Ei, tühista",
+            onConfirm: () => this.delete(id)
+        };
+        this.modalService.openModal(ConfirmationDialogComponent, initialState);
+    }
+
+    private delete(id: string): void {
         this.attendeeService
             .deleteAttendee(id)
                 .pipe(

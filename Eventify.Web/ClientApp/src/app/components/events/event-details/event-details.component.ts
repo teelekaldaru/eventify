@@ -4,7 +4,7 @@ import { EventService } from '../../../services/events/event.service';
 import { ActivatedRoute } from '@angular/router';
 import { first, map } from 'rxjs/operators';
 import { AttendeeGridRow } from '../../../models/attendees/attendee-grid-view.model';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/services/alerts/alert.service';
 
 @Component({
     selector: 'event-details',
