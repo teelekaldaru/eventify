@@ -18,6 +18,14 @@ Used technologies:
 	```
 5. Open http://localhost:44350/ in browser
 
+## Run unit tests
+1. Open console in solution root folder
+2. Run following command:
+	```
+	dotnet test
+	```
+	
+
 ---
 To update database structure, open console in solution root folder and run this command:
 ```
