@@ -3,8 +3,8 @@
 ## About
 Used technologies:
 
-Client-side: Angular 11, Bootstrap 5.1
-Backend: .NET 6, EF Core, NUnit
+- Client-side: Angular 11, Bootstrap 5.1
+- Backend: .NET 6, EF Core, NUnit
 
 ## Run application
 1. Clone the project into your computer
