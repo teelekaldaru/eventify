@@ -1,27 +1,27 @@
-using System.Collections;
-using System.Reflection;
 using Eventify.Common.Classes.Attendees;
 using Eventify.Common.Classes.Events;
 using Eventify.Common.Utils.Exceptions;
+using Eventify.Common.Utils.Logger;
 using Eventify.Common.Utils.Messages;
 using Eventify.Common.Utils.Validations;
 using Eventify.Core.Attendees;
 using Eventify.Core.Events;
 using Eventify.DAL.Events;
-using Moq;
-using Newtonsoft.Json;
+using Eventify.UnitTests.Extensions;
+using NSubstitute;
+using NSubstitute.ExceptionExtensions;
+using NSubstitute.ReturnsExtensions;
 using NUnit.Framework;
-using ILogger = Eventify.Common.Utils.Logger.ILogger;
 
-namespace Eventify.UnitTests
+namespace Eventify.UnitTests.Tests
 {
     public class EventWebServiceTests : UnitTest
     {
         private IEventWebService _eventWebService;
 
-        private Mock<ILogger> _logger;
-        private Mock<IEventRepository> _eventRepository;
-        private Mock<IEventSaveValidator> _eventSaveValidator;
+        private ILogger _logger;
+        private IEventRepository _eventRepository;
+        private IEventSaveValidator _eventSaveValidator;
 
         private Event _futureEvent;
         private Event _pastEvent;
@@ -34,11 +34,11 @@ namespace Eventify.UnitTests
         [SetUp]
         public void Setup()
         {
-            _logger = new Mock<ILogger>();
-            _eventRepository = new Mock<IEventRepository>();
-            _eventSaveValidator = new Mock<IEventSaveValidator>();
+            _logger = Substitute.For<ILogger>();
+            _eventRepository = Substitute.For<IEventRepository>();
+            _eventSaveValidator = Substitute.For<IEventSaveValidator>();
 
-            _eventWebService = new EventWebService(_logger.Object, _eventRepository.Object, _eventSaveValidator.Object);
+            _eventWebService = new EventWebService(_logger, _eventRepository, _eventSaveValidator);
 
             _futureEvent = new Event
             {
@@ -91,7 +91,7 @@ namespace Eventify.UnitTests
         public async Task GetEvents_returnsEventGrid()
         {
             var events = new List<Event>() { _futureEvent, _pastEvent };
-            _eventRepository.Setup(x => x.GetEvents()).ReturnsAsync(events);
+            _eventRepository.GetEvents().Returns(events);
 
             var result = await _eventWebService.GetEvents();
             Assert.IsTrue(result.Success);
@@ -111,7 +111,7 @@ namespace Eventify.UnitTests
         public async Task GetEvent_returnsEventDetails()
         {
             var eventId = _futureEvent.Id;
-            _eventRepository.Setup(x => x.GetEventById(eventId)).ReturnsAsync(_futureEvent);
+            _eventRepository.GetEventById(eventId).Returns(_futureEvent);
 
             var result = await _eventWebService.GetEventDetails(eventId);
 
@@ -124,7 +124,7 @@ namespace Eventify.UnitTests
         public async Task GetEventByInvalidId_returnsError()
         {
             var invalidId = Guid.Parse("00000000-0000-0000-0000-000000000000");
-            _eventRepository.Setup(x => x.GetEventById(invalidId)).ReturnsAsync((Event)null);
+            _eventRepository.GetEventById(invalidId).ReturnsNull();
 
             var result = await _eventWebService.GetEventDetails(invalidId);
 
@@ -138,14 +138,15 @@ namespace Eventify.UnitTests
         {
             var saveModel = new EventSaveModel
             {
-                Name = "UnitTest1",
-                Address = "UnitTest1",
-                StartDate = new DateTime(2099, 1, 1, 0, 0, 0).ToString(),
-                Notes = "UnitTest1"
+                Id = _futureEvent.Id,
+                Name = _futureEvent.Name,
+                Address = _futureEvent.Address,
+                StartDate = "2099-01-01T00:00:00",
+                Notes = _futureEvent.Notes
             };
 
-            _eventRepository.Setup(x => x.AddEvent(_futureEvent)).ReturnsAsync(_futureEvent);
-            _eventSaveValidator.Setup(x => x.Validate(saveModel)).ReturnsAsync(new ValidationMessages());
+            _eventSaveValidator.Validate(saveModel).Returns(new ValidationMessages());
+            _eventRepository.AddEvent(Arg.Any<Event>()).ReturnsForAnyArgs(_futureEvent);
 
             var result = await _eventWebService.SaveEvent(saveModel);
 
@@ -154,13 +155,22 @@ namespace Eventify.UnitTests
             AssertExtensions.AreEqualByJson(result.Data, _futureEventDetails);
         }
 
-        /*[Test]
+        [Test]
         public async Task UpdateEvent_returnsEventDetails()
         {
-            var eventId = _futureEvent.Id;
-            _eventRepository.Setup(x => x.GetEventById(eventId)).ReturnsAsync(_futureEvent);
+            var saveModel = new EventSaveModel
+            {
+                Id = _futureEvent.Id,
+                Name = _futureEvent.Name,
+                Address = _futureEvent.Address,
+                StartDate = "2099-01-01T00:00:00",
+                Notes = _futureEvent.Notes
+            };
 
-            var result = await _eventWebService.SaveEvent(eventId);
+            _eventSaveValidator.Validate(saveModel).Returns(new ValidationMessages());
+            _eventRepository.UpdateEvent(Arg.Any<Event>()).ReturnsForAnyArgs(_futureEvent);
+
+            var result = await _eventWebService.SaveEvent(saveModel);
 
             Assert.IsTrue(result.Success);
             Assert.IsNotNull(result.Data);
@@ -168,17 +178,32 @@ namespace Eventify.UnitTests
         }
 
         [Test]
-        public async Task SaveInvalidEvent_returnsValidationErrors()
+        public async Task SaveEventInvalidData_returnsValidationErrors()
         {
-            var eventId = _futureEvent.Id;
-            _eventRepository.Setup(x => x.GetEventById(eventId)).ReturnsAsync(_futureEvent);
+            var saveModel = new EventSaveModel
+            {
+                Name = string.Empty,
+                Address = string.Empty,
+                StartDate = string.Empty,
+                Notes = string.Empty
+            };
 
-            var result = await _eventWebService.SaveEvent(eventId);
+            var eventSaveValidator = new EventSaveValidator();
+            var result = await eventSaveValidator.Validate(saveModel);
 
-            Assert.IsTrue(result.Success);
-            Assert.IsNotNull(result.Data);
-            AssertExtensions.AreEqualByJson(result.Data, _futureEventDetails);
-        }*/
+            Assert.IsFalse(result.IsValid);
+
+            var messages = result.GetWebMessages().ToList();
+            var expectedMessages = new[]
+            {
+                "Nimi on kohustuslik",
+                "Koht on kohustuslik",
+                "Toimumisaeg on kohustuslik"
+            };
+
+            Assert.IsNotEmpty(messages);
+            Assert.That(messages, Has.Exactly(3).Matches<SimpleMessage>(x => expectedMessages.Any(y => x.Header == y)));
+        }
 
         [Test]
         public async Task DeleteEvent_returnsSuccess()
@@ -195,22 +220,12 @@ namespace Eventify.UnitTests
             var invalidId = Guid.Parse("00000000-0000-0000-0000-000000000000");
             var message = $"Event with id {invalidId} does not exist";
 
-            _eventRepository.Setup(x => x.DeleteEvent(invalidId)).Throws(new SimpleException(message));
+            _eventRepository.DeleteEvent(invalidId).Throws(new SimpleException(message));
 
             var result = await _eventWebService.DeleteEvent(invalidId);
 
             Assert.IsFalse(result.Success);
             Assert.That(result.Messages, Has.Exactly(1).Matches<SimpleMessage>(x => x.Header == message));
-        }
-    }
-
-    public static class AssertExtensions
-    {
-        public static void AreEqualByJson(object expected, object actual)
-        {
-            var expectedJson = JsonConvert.SerializeObject(expected);
-            var actualJson = JsonConvert.SerializeObject(actual);
-            Assert.That(actualJson, Is.EqualTo(expectedJson));
         }
     }
 }

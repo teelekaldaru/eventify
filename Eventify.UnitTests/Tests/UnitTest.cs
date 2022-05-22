@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.TestHost;
 using NUnit.Framework;
 
-namespace Eventify.UnitTests
+namespace Eventify.UnitTests.Tests
 {
     public class UnitTest
     {

@@ -6,12 +6,12 @@ using Eventify.Common.Utils.Validations;
 
 namespace Eventify.Core.Attendees
 {
-	internal interface IAttendeeSaveValidator
+	public interface IAttendeeSaveValidator
 	{
 		Task<ValidationMessages> Validate(AttendeeSaveModel entity);
 	}
 
-	internal class AttendeeSaveValidator : Validator<AttendeeSaveModel, EmptyValidationParameters>, IAttendeeSaveValidator
+    public class AttendeeSaveValidator : Validator<AttendeeSaveModel, EmptyValidationParameters>, IAttendeeSaveValidator
 	{
 		public override Task<ValidationMessages> Validate(AttendeeSaveModel entity, EmptyValidationParameters parameters)
 		{

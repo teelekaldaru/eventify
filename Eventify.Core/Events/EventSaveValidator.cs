@@ -10,7 +10,7 @@ namespace Eventify.Core.Events
 		Task<ValidationMessages> Validate(EventSaveModel entity);
 	}
 
-	internal class EventSaveValidator : Validator<EventSaveModel, EmptyValidationParameters>, IEventSaveValidator
+	public class EventSaveValidator : Validator<EventSaveModel, EmptyValidationParameters>, IEventSaveValidator
 	{
 		public override Task<ValidationMessages> Validate(EventSaveModel entity, EmptyValidationParameters parameters)
 		{

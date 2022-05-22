@@ -17,7 +17,7 @@ namespace Eventify.Core.Attendees
         Task<RequestResult> RemoveAttendeeFromEvent(Guid eventAttendeeId);
     }
 
-    internal class AttendeeWebService : BaseWebService, IAttendeeWebService
+    public class AttendeeWebService : BaseWebService, IAttendeeWebService
     {
         private readonly IAttendeeRepository _attendeeRepository;
         private readonly IAttendeeSaveValidator _attendeeSaveValidator;
@@ -36,6 +36,11 @@ namespace Eventify.Core.Attendees
             try
             {
                 var attendee = await _attendeeRepository.GetEventAttendeeById(eventAttendeeId);
+                if (attendee == null)
+                {
+                    return RequestResult<AttendeeViewModel>.CreateError($"Event attendee with id {eventAttendeeId} was not found");
+                }
+
                 var result = attendee.ToViewModel();
                 return RequestResult<AttendeeViewModel>.CreateSuccess(result);
             }

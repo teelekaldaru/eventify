@@ -11,7 +11,7 @@ namespace Eventify.DAL.Attendees
 {
 	public interface IAttendeeRepository
     {
-        Task<EventAttendee> GetEventAttendeeById(Guid eventAttendeeId);
+        Task<EventAttendee?> GetEventAttendeeById(Guid eventAttendeeId);
 
         Task<EventAttendee> AddEventAttendee(EventAttendee eventAttendee);
 
@@ -26,7 +26,7 @@ namespace Eventify.DAL.Attendees
         {
         }
 
-        public async Task<EventAttendee> GetEventAttendeeById(Guid eventAttendeeId)
+        public async Task<EventAttendee?> GetEventAttendeeById(Guid eventAttendeeId)
         {
             await using var context = CreateContext();
             var dbEventAttendee = await context.EventAttendees

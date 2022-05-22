@@ -12,6 +12,6 @@ namespace Eventify.Core.Events
 
         public string StartDate { get; set; }
 
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
     }
 }
