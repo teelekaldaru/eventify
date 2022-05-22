@@ -34,6 +34,8 @@ export class AttendeeCreateEditComponent implements OnInit {
         this.getPaymentMethods();
         if (!this.attendee) {
             this.resetForm();
+        } else {
+            this.attendeeType = this.attendee.attendeeType;
         }
     }
 
@@ -50,6 +52,7 @@ export class AttendeeCreateEditComponent implements OnInit {
                 first(),
                 map((response) => {
                     if (response && response.success) {
+                        this.resetForm();
                         this.onSave.emit(response.data);
                     } else {
                         this.alertService.responseErrors(response.messages);

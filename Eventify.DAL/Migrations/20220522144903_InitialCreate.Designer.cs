@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Eventify.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220521071858_InitialCreate")]
+    [Migration("20220522144903_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,15 +32,17 @@ namespace Eventify.DAL.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
@@ -55,14 +57,17 @@ namespace Eventify.DAL.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(512)
+                        .HasColumnType("character varying(512)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text");
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp without time zone");
@@ -84,27 +89,23 @@ namespace Eventify.DAL.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid?>("DbAttendeeId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("EventId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Notes")
-                        .HasColumnType("text");
+                        .HasMaxLength(5000)
+                        .HasColumnType("character varying(5000)");
 
                     b.Property<int?>("Participants")
                         .HasColumnType("integer");
 
                     b.Property<string>("PaymentMethod")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AttendeeId");
-
-                    b.HasIndex("DbAttendeeId");
 
                     b.HasIndex("EventId");
 
@@ -116,7 +117,8 @@ namespace Eventify.DAL.Migrations
             modelBuilder.Entity("Eventify.Domain.DbPaymentMethod", b =>
                 {
                     b.Property<string>("Name")
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.HasKey("Name");
 
@@ -126,14 +128,10 @@ namespace Eventify.DAL.Migrations
             modelBuilder.Entity("Eventify.Domain.DbEventAttendee", b =>
                 {
                     b.HasOne("Eventify.Domain.DbAttendee", "Attendee")
-                        .WithMany()
+                        .WithMany("AttendedEvents")
                         .HasForeignKey("AttendeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Eventify.Domain.DbAttendee", null)
-                        .WithMany("AttendedEvents")
-                        .HasForeignKey("DbAttendeeId");
 
                     b.HasOne("Eventify.Domain.DbEvent", "Event")
                         .WithMany("EventAttendees")

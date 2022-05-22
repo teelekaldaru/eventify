@@ -205,7 +205,8 @@ namespace Eventify.UnitTests.Tests
                 Name = string.Empty,
                 LastName = string.Empty,
                 Code = "Invalid",
-                PaymentMethod = string.Empty
+                PaymentMethod = string.Empty,
+                Notes = new string('*', 1501)
             };
 
             var attendeeSaveValidator = new AttendeeSaveValidator();
@@ -217,12 +218,13 @@ namespace Eventify.UnitTests.Tests
                 ErrorMessages.AttendeeFirstNameRequired,
                 ErrorMessages.AttendeeLastNameRequired,
                 ErrorMessages.AttendeePersonalCodeInvalid,
-                ErrorMessages.AttendeePaymentMethodRequired
+                ErrorMessages.AttendeePaymentMethodRequired,
+                ErrorMessages.AttendeePersonNotesMaxLengthExceeded
             };
 
             Assert.IsFalse(result.IsValid);
             Assert.IsNotEmpty(messages);
-            Assert.That(messages, Has.Exactly(4).Matches<SimpleMessage>(x => expectedMessages.Any(y => x.Header == y)));
+            Assert.That(messages, Has.Exactly(5).Matches<SimpleMessage>(x => expectedMessages.Any(y => x.Header == y)));
         }
 
         [Test]
@@ -234,7 +236,8 @@ namespace Eventify.UnitTests.Tests
                 Name = string.Empty,
                 Code = string.Empty,
                 Participants = 0,
-                PaymentMethod = string.Empty
+                PaymentMethod = string.Empty,
+                Notes = new string('*', 5001)
             };
 
             var attendeeSaveValidator = new AttendeeSaveValidator();
@@ -246,12 +249,13 @@ namespace Eventify.UnitTests.Tests
                 ErrorMessages.AttendeeNameRequired,
                 ErrorMessages.AttendeeRegisterCodeRequired,
                 ErrorMessages.AttendeeParticipantsInvalid,
-                ErrorMessages.AttendeePaymentMethodRequired
+                ErrorMessages.AttendeePaymentMethodRequired,
+                ErrorMessages.AttendeeCompanyNotesMaxLengthExceeded
             };
 
             Assert.IsFalse(result.IsValid);
             Assert.IsNotEmpty(messages);
-            Assert.That(messages, Has.Exactly(4).Matches<SimpleMessage>(x => expectedMessages.Any(y => x.Header == y)));
+            Assert.That(messages, Has.Exactly(5).Matches<SimpleMessage>(x => expectedMessages.Any(y => x.Header == y)));
         }
 
         [Test]

@@ -13,10 +13,13 @@ namespace Eventify.Domain
 	    [Key]
 	    public Guid Id { get; set; }
 
+        [MaxLength(256)]
         public string Name { get; set; }
 
+        [MaxLength(256)]
         public string? LastName { get; set; }
 
+        [MaxLength(256)]
         public string Code { get; set; }
 
         public AttendeeType AttendeeType { get; set; }

@@ -21,11 +21,6 @@ namespace Eventify.DAL.Infrastructure
             }
         }
 
-        /*public static IdentityBuilder RegisterIdentityContext(this IdentityBuilder identityBuilder)
-        {
-            return identityBuilder.AddEntityFrameworkStores<AppDbContext>();
-        }*/
-
         private static void RegisterPostgreSql(IServiceCollection services, IConfiguration configuration)
         {
             var systemConnectionString = configuration["ConnectionStrings:MainConnection"];

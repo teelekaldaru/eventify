@@ -23,7 +23,7 @@ namespace Eventify.DAL.Infrastructure
             base.OnModelCreating(builder);
 
             builder.Entity<DbEventAttendee>().HasOne(x => x.Event).WithMany(x => x.EventAttendees).HasForeignKey(x => x.EventId);
-            builder.Entity<DbEventAttendee>().HasOne(x => x.Attendee).WithMany().HasForeignKey(x => x.AttendeeId);
+            builder.Entity<DbEventAttendee>().HasOne(x => x.Attendee).WithMany(x => x.AttendedEvents).HasForeignKey(x => x.AttendeeId);
 
             builder.Entity<DbEventAttendee>().HasOne<DbPaymentMethod>().WithMany().HasForeignKey(x => x.PaymentMethod);
         }

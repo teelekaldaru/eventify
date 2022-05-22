@@ -189,24 +189,44 @@ namespace Eventify.UnitTests.Tests
                 Name = string.Empty,
                 Address = string.Empty,
                 StartDate = string.Empty,
-                Notes = string.Empty
-            };
+                Notes = new string('*', 1001)
+        };
 
             var eventSaveValidator = new EventSaveValidator();
             var result = await eventSaveValidator.Validate(saveModel);
-
-            Assert.IsFalse(result.IsValid);
 
             var messages = result.GetWebMessages().ToList();
             var expectedMessages = new[]
             {
                 ErrorMessages.EventNameRequired,
                 ErrorMessages.EventAddressRequired,
-                ErrorMessages.EventStartTimeRequired
+                ErrorMessages.EventStartTimeRequired,
+                ErrorMessages.EventNotesMaxLengthExceeded
             };
 
+            Assert.IsFalse(result.IsValid);
             Assert.IsNotEmpty(messages);
-            Assert.That(messages, Has.Exactly(3).Matches<SimpleMessage>(x => expectedMessages.Any(y => x.Header == y)));
+            Assert.That(messages, Has.Exactly(4).Matches<SimpleMessage>(x => expectedMessages.Any(y => x.Header == y)));
+        }
+
+        [Test]
+        public async Task SaveEventInvalidStartTime_returnsValidationErrors()
+        {
+            var saveModel = new EventSaveModel
+            {
+                Name = _futureEvent.Name,
+                Address = _futureEvent.Address,
+                StartDate = "1000-01-01T00:00:00"
+            };
+
+            var eventSaveValidator = new EventSaveValidator();
+            var result = await eventSaveValidator.Validate(saveModel);
+
+            var messages = result.GetWebMessages().ToList();
+
+            Assert.IsFalse(result.IsValid);
+            Assert.IsNotEmpty(messages);
+            Assert.That(messages, Has.Exactly(1).Matches<SimpleMessage>(x => x.Header == ErrorMessages.EventStartTimeInPast));
         }
 
         [Test]

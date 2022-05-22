@@ -24,7 +24,17 @@ namespace Eventify.Core.Events
 			if (!string.IsNullOrWhiteSpace(entity.StartDate))
 			{
 				messages.AddIfInvalid(ValidationCheck.Create(DateTime.TryParse(entity.StartDate, out _), ErrorMessages.EventStartTimeInvalidFormat, null, ValidationMessageSeverity.Error));
+
+                if (DateTime.TryParse(entity.StartDate, out var startDate))
+                {
+                    messages.AddIfInvalid(ValidationCheck.Create(startDate > DateTime.Now, ErrorMessages.EventStartTimeInPast, null, ValidationMessageSeverity.Error));
+                }
 			}
+
+			if (!string.IsNullOrWhiteSpace(entity.Notes))
+            {
+                messages.AddIfInvalid(ValidationCheck.Create(entity.Notes.Length <= 1000, ErrorMessages.EventNotesMaxLengthExceeded, null, ValidationMessageSeverity.Error));
+            }
 
 			return Task.FromResult(messages);
 		}

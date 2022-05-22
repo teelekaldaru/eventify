@@ -21,6 +21,7 @@ namespace Eventify.Domain
 
 		public int? Participants { get; set; }
 
+        [MaxLength(5000)]
 		public string? Notes { get; set; }
 
 		public virtual DbEvent Event { get; set; }

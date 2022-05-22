@@ -7,6 +7,7 @@ namespace Eventify.Domain
 	public class DbPaymentMethod
 	{
 		[Key]
+        [MaxLength(256)]
 		public string Name { get; set; }
 	}
 }

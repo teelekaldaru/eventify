@@ -34,6 +34,11 @@ namespace Eventify.Core.Attendees
                     var personalCode = new PersonalCode(entity.Code);
                     messages.AddIfInvalid(ValidationCheck.Create(personalCode.IsValid(), ErrorMessages.AttendeePersonalCodeInvalid, null, ValidationMessageSeverity.Error));
                 }
+
+                if (!string.IsNullOrWhiteSpace(entity.Notes))
+                {
+                    messages.AddIfInvalid(ValidationCheck.Create(entity.Notes.Length <= 1500, ErrorMessages.AttendeePersonNotesMaxLengthExceeded, null, ValidationMessageSeverity.Error));
+                }
 			}
 
 			if (entity.AttendeeType == AttendeeType.Company)
@@ -45,6 +50,11 @@ namespace Eventify.Core.Attendees
                 if (entity.Participants.HasValue)
                 {
                     messages.AddIfInvalid(ValidationCheck.Create(entity.Participants > 0, ErrorMessages.AttendeeParticipantsInvalid, null, ValidationMessageSeverity.Error));
+                }
+
+                if (!string.IsNullOrWhiteSpace(entity.Notes))
+                {
+                    messages.AddIfInvalid(ValidationCheck.Create(entity.Notes.Length <= 5000, ErrorMessages.AttendeeCompanyNotesMaxLengthExceeded, null, ValidationMessageSeverity.Error));
                 }
 			}
 
