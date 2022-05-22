@@ -20,18 +20,19 @@ export class EventCreateEditComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.event = {};
+        this.clearForm();
     }
 
     save(): void {
-        console.log(this.event);
+        this.alertService.clear();
         this.eventService
             .saveEvent(this.event)
             .pipe(
                 first(),
                 map((response) => {
                     if (response && response.success) {
-                        this.openDetails(response.data.id);
+                        this.clearForm();
+                        this.router.navigateByUrl(`/`);
                     } else {
                         this.alertService.responseErrors(response.messages);
                     }
@@ -40,8 +41,8 @@ export class EventCreateEditComponent implements OnInit {
             .subscribe();
     }
 
-    openDetails(eventId: string): void {
-        this.router.navigateByUrl(`event/${eventId}`);
+    private clearForm(): void {
+        this.event = {};
     }
 
     get minDate(): string { return new Date().toISOString().slice(0, 16); }

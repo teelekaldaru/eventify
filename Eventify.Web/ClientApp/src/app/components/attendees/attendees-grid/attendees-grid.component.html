@@ -6,7 +6,7 @@
             <td>
                 <a class="link" (click)="openDetails(attendee.id)">Vaata</a>
             </td>
-            <td>
+            <td *ngIf="!isPast">
                 <a class="link" (click)="tryDelete(attendee.id)">Kustuta</a>
             </td>
         </tr>

@@ -27,6 +27,7 @@
                             <td *ngIf="hasAttendees" class="pl-0">
                                 <attendees-grid
                                     [attendees]="event.attendees"
+                                    [isPast]="event.isPast"
                                     (onDeleted)="removeAttendee($event)"
                                 ></attendees-grid>
                             </td>

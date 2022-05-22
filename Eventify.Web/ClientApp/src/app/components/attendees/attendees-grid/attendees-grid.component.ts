@@ -15,6 +15,8 @@ import { ModalService } from 'src/app/services/modal.service';
 export class AttendeesGridComponent implements OnInit {
 
     @Input() attendees: AttendeeGridRow[];
+    @Input() isPast: boolean;
+
     @Output() onDeleted: EventEmitter<string> = new EventEmitter();
 
     constructor(
