@@ -5,6 +5,7 @@ Used technologies:
 
 - Client-side: Angular 11, Bootstrap 5.1
 - Backend: .NET 6, EF Core, NUnit
+- Database: PostgreSQL
 
 ## Run application
 1. Clone the project into your computer
