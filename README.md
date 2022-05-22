@@ -9,7 +9,7 @@ Used technologies:
 ## Run application
 1. Clone the project into your computer
 2. Open console in solution root folder
-3. Install npm packages
+3. If you are running application for the first time, install npm packages
 	- cd Eventify.Web/ClientApp
 	- npm install
 4. Go back to root folder and run following command
